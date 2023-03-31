@@ -1,0 +1,26 @@
+{
+  "manifest_version": 3,
+  "name": "The React Email Reader",
+  "description": "",
+  "version": "1.0",
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "icons": {
+    "16": "/images/email-reader16.png",
+    "32": "/images/email-reader32.png",
+    "48": "/images/email-reader48.png",
+    "128": "/images/email-reader128.png"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": [
+    "scripting",
+    "activeTab"
+  ],
+  "host_permissions": [
+    "http://*/",
+    "https://*/"
+  ]
+}

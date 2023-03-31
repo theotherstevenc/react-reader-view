@@ -1,0 +1,122 @@
+* {
+  box-sizing: border-box;
+}
+body {
+  color: var(--text, #111);
+  background-color: var(--background, #fefefe);
+  width: 30em;
+  max-width: 100%;
+  accent-color: var(--accent, #0d5c63);
+}
+h1 img {
+  height: 1.2em;
+  margin-left: 0.5em;
+}
+.profiles {
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.5em;
+  text-align: center;
+}
+.profiles button {
+  grid-column: 1 / 4;
+}
+menu:has(#readerViewA:checked) ~ .profileA,
+menu:has(#readerViewB:checked) ~ .profileB,
+menu:has(#readerViewC:checked) ~ .profileC {
+  display: block;
+}
+.button {
+  font-size: 1.2em;
+  border: 0.1em solid currentColor;
+  padding: 0.5em 1em;
+  font-weight: bold;
+  display: grid;
+  align-items: center;
+}
+.button:hover {
+  cursor: pointer;
+}
+/* temporary style to hide/show enable/diable button */
+.highlight {
+  display: none;
+}
+input[role='menuitemradio']:focus + .button {
+  outline: 2px solid Highlight;
+  outline: auto 5px -webkit-focus-ring-color;
+}
+.profiles input {
+  appearance: none;
+  -webkit-appearance: none;
+  height: 1px;
+  width: 1px;
+  position: absolute;
+  opacity: 0;
+}
+.profiles input:checked + label:not(:focus) {
+  outline: 0.2em solid var(--accent, #0d5c63);
+  /* box-shadow: 0 0.4em 0.25em -0.3em var(--text, #111); */
+}
+
+fieldset,
+details {
+  margin: 1.5em 0 0;
+  padding: 0.75em;
+  border: 2px groove;
+}
+legend,
+summary {
+  font-weight: bold;
+  font-size: 1.2em;
+}
+summary:hover {
+  cursor: pointer;
+}
+details[open] summary {
+  margin-bottom: 1em;
+}
+.selectStyles {
+  display: table;
+  border-spacing: 0.5em;
+  width: 100%;
+}
+.selectStyles label {
+  display: table-row;
+}
+.selectStyles label > span {
+  display: table-cell;
+  vertical-align: top;
+  width: 50%;
+  height: 2em;
+}
+input[type='text'],
+input[type='range'],
+input[type='color'],
+select {
+  width: 100%;
+}
+input[type='color'] {
+  background: none;
+  padding: 0;
+}
+input[type='color']::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+input[type='color']::-webkit-color-swatch {
+  border: 1ps solid;
+}
+.emc-credit {
+  text-align: end;
+}
+.emc-credit img {
+  height: 2em;
+  vertical-align: middle;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text: #eee;
+    --background: #333;
+    --accent: #a9c5a5;
+  }
+}
