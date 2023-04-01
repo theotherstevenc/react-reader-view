@@ -94,6 +94,10 @@ const interpolateStyles = (profile) => {
     }
   .readerView.readerView button{display:none} /* Outlook zoom button */
   `
+  let style = document.querySelectorAll('.blockedImage')
+  for (let item of Array.from(style)) {
+    item.remove()
+  }
 
   if (window.location.hostname === 'mail.google.com') {
     const queryString = window.location.search

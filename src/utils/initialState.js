@@ -1,5 +1,5 @@
 const store = JSON.parse(localStorage.getItem('profile'))
-export default {
+const initialState = {
   readerViewEnabled: store?.readerViewEnabled || false,
   currentProfile: store?.currentProfile || 'A',
   profileA_name: store?.profileA_name || 'Light',
@@ -24,3 +24,4 @@ export default {
   linkColor: store?.linkColor || '#3101ee',
   blockImages: store?.blockImages || false,
 }
+export default initialState

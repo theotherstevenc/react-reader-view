@@ -1,43 +1,32 @@
 import React, { useState, useEffect } from 'react'
 import ReactDOM from 'react-dom/client'
-// consolidate these into one file
+
 import interpolateStyles from './utils/interpolateStyles'
 import exterpolateStyles from './utils/exterpolateStyles'
 import initialState from './utils/initialState'
+
 import './css/styles.css'
 
 const Popup = () => {
   const [profile, setProfile] = useState(initialState)
   const [isReaderViewEnabled, setIsReaderViewEnabled] = useState(JSON.parse(localStorage.getItem('readerViewEnabled')) || false)
 
-  // ******* please D.R.Y.
-  const readerViewOn = (profile) => {
+  const toggleReaderView = (profile, readerViewEnabled) => {
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       const activeTabId = tabs[0].id
       chrome.scripting.executeScript({
         target: { tabId: activeTabId },
         args: [profile],
-        function: interpolateStyles,
+        function: readerViewEnabled ? interpolateStyles : exterpolateStyles,
       })
     })
-    localStorage.setItem('readerViewEnabled', true)
-  }
-
-  // ******* please D.R.Y.
-  const readerViewOff = () => {
-    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-      const activeTabId = tabs[0].id
-      chrome.scripting.executeScript({
-        target: { tabId: activeTabId },
-        function: exterpolateStyles,
-      })
-    })
-    localStorage.setItem('readerViewEnabled', false)
+    localStorage.setItem('readerViewEnabled', readerViewEnabled)
+    setIsReaderViewEnabled(readerViewEnabled)
   }
 
   useEffect(() => {
     if (isReaderViewEnabled) {
-      readerViewOn(profile)
+      toggleReaderView(profile, true)
     }
     localStorage.setItem('profile', JSON.stringify(profile))
   }, [profile])
@@ -102,8 +91,7 @@ const Popup = () => {
           id='readerViewOff'
           onClick={(e) => {
             e.preventDefault()
-            readerViewOff(e)
-            setIsReaderViewEnabled(false)
+            toggleReaderView(null, false)
           }}
         >
           Disable Reader View
@@ -113,8 +101,7 @@ const Popup = () => {
           id='readerViewOn'
           onClick={(e) => {
             e.preventDefault()
-            readerViewOn(profile)
-            setIsReaderViewEnabled(true)
+            toggleReaderView(profile, true)
           }}
         >
           Enable Reader View
@@ -126,7 +113,7 @@ const Popup = () => {
             localStorage.clear()
             setProfile(initialState)
             if (isReaderViewEnabled) {
-              readerViewOn(profile)
+              toggleReaderView(profile, true)
             }
           }}
         >
@@ -401,6 +388,7 @@ const Popup = () => {
             </span>
             <span>
               <select
+                value={profile.textAlign}
                 name='textAlign'
                 id='textAlign'
                 onChange={(e) => {
@@ -411,7 +399,7 @@ const Popup = () => {
                 }}
               >
                 {['start', 'center', 'end'].map((el) => (
-                  <option key={el} value={el} selected={profile.textAlign === el}>
+                  <option key={el} value={el}>
                     {el}
                   </option>
                 ))}
@@ -424,6 +412,7 @@ const Popup = () => {
             </span>
             <span>
               <select
+                value={profile.fontFamily}
                 name='fontFamily'
                 id='fontFamily'
                 onChange={(e) => {
@@ -434,7 +423,7 @@ const Popup = () => {
                 }}
               >
                 {['serif', 'sans-serif', 'monospace', 'cursive'].map((el) => (
-                  <option key={el} value={el} selected={profile.fontFamily === el}>
+                  <option key={el} value={el}>
                     {el}
                   </option>
                 ))}
@@ -538,7 +527,7 @@ const Popup = () => {
                 type='checkbox'
                 name='blockImages'
                 id='blockImages'
-                value={profile.blockImages}
+                checked={profile.blockImages}
                 onChange={(e) => {
                   setProfile((profile) => ({
                     ...profile,
