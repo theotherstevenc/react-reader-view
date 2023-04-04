@@ -1,4 +1,6 @@
 const interpolateStyles = (profile) => {
+  let wrappers = []
+
   const styleSheet = `
     .readerView.readerView * {
       all: revert
@@ -104,10 +106,22 @@ const interpolateStyles = (profile) => {
     const urlParams = new URLSearchParams(queryString)
     const view = urlParams.get('view')
     if (view === 'lg') {
-      wrappers = document.querySelectorAll('table.message > tbody > tr > td > table > tbody > tr:last-of-type > td > div')
+      wrappers = Array.from(document.querySelectorAll('table.message > tbody > tr > td > table > tbody > tr:last-of-type > td > div'))
     } else {
-      wrappers = document.querySelectorAll('.a3s')
+      wrappers = Array.from(document.querySelectorAll('.a3s'))
     }
+  }
+
+  if (window.location.hostname === 'outlook.live.com') {
+    wrappers = Array.from(document.querySelectorAll("[aria-label='Message body']"))
+  }
+
+  if (window.location.hostname === 'mail.yahoo.com') {
+    wrappers = Array.from(document.querySelectorAll('.msg-body'))
+  }
+
+  if (window.location.hostname === 'mail.aol.com') {
+    wrappers = Array.from(document.querySelectorAll('.AOLWebSuite > div[id], .msg-body'))
   }
 
   if (!document.querySelector('#ervStyleElement')) {
@@ -128,19 +142,22 @@ const interpolateStyles = (profile) => {
     }
   }
 
-  let emails = Array.from(document.querySelectorAll('.readerView *'))
+  const emails = Array.from(document.querySelectorAll('.readerView *'))
 
   for (let item of emails) {
     let style = window.getComputedStyle(item)
     if (style.display === 'none') {
       item.setAttribute('date-hidden', '')
     }
+
     if (item.getAttribute('aria-hidden') == 'true') {
       item.setAttribute('date-hidden', '')
     }
+
     if (item.hasAttribute('data-erv-emoji')) {
       item.remove()
     }
+
     if (item.hasAttribute('data-emoji') && profile.blockImages == false) {
       let alt = item.getAttribute('alt')
       item.insertAdjacentHTML('beforebegin', '<span data-erv-emoji>' + alt + '</span>')
