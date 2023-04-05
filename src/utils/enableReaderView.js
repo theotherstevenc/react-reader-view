@@ -1,4 +1,4 @@
-const interpolateStyles = (profile) => {
+const enableReaderView = (profile) => {
   let wrappers = []
 
   const styleSheet = `
@@ -211,4 +211,4 @@ const interpolateStyles = (profile) => {
     }
   }
 }
-export default interpolateStyles
+export default enableReaderView
