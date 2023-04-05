@@ -4,6 +4,8 @@ The React Email Reader View is an app that uses React to generate the appropriat
 
 Currently, the extension supports web versions of Gmail, Outlook, Yahoo, AOL. When enabled, it removes clutter from an email and allows a recipient the ability to change text size, contrast, layout, etc for improved readability.
 
+> This was inspired by and contains logic from the [EMC project](https://github.com/email-markup-consortium/email-reader-view).
+
 ## Installation
 
 ```
