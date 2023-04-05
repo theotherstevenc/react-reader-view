@@ -1,4 +1,5 @@
 const path = require('path')
+const TerserPlugin = require('terser-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
 
@@ -8,7 +9,7 @@ module.exports = {
     background: './src/background.jsx',
   },
   output: {
-    path: path.resolve(__dirname, 'extension'),
+    path: path.resolve(__dirname, 'dist'),
     filename: '[name].js',
   },
   module: {
@@ -38,7 +39,11 @@ module.exports = {
       patterns: [{ from: 'public' }],
     }),
   ],
-  experiments: {
-    topLevelAwait: true,
+  optimization: {
+    minimizer: [
+      new TerserPlugin({
+        extractComments: false,
+      }),
+    ],
   },
 }
