@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import ReactDOM from 'react-dom/client'
 
-import interpolateStyles from './utils/interpolateStyles'
-import exterpolateStyles from './utils/exterpolateStyles'
+import enableReaderView from './utils/enableReaderView'
+import disableReaderView from './utils/disableReaderView'
 import initialState from './utils/initialState'
 
 import './css/styles.css'
@@ -17,7 +17,7 @@ const Popup = () => {
       chrome.scripting.executeScript({
         target: { tabId: activeTabId },
         args: [profile],
-        function: readerViewEnabled ? interpolateStyles : exterpolateStyles,
+        function: readerViewEnabled ? enableReaderView : disableReaderView,
       })
     })
     localStorage.setItem('readerViewEnabled', readerViewEnabled)

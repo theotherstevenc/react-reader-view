@@ -1,4 +1,4 @@
-const exterpolateStyles = () => {
+const enableReaderView = () => {
   const email = document.querySelectorAll('.readerView *')
   for (let item of Array.from(email)) {
     // Replace styling attributes
@@ -38,4 +38,4 @@ const exterpolateStyles = () => {
     item.remove()
   }
 }
-export default exterpolateStyles
+export default enableReaderView
