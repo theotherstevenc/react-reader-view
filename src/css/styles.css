@@ -15,13 +15,23 @@ h1 img {
 .profiles {
   margin: 0;
   padding: 0;
-  display: grid;
-  gap: 0.5em;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6em;
 }
-.profiles button {
-  grid-column: 1 / 4;
+.profiles div {
+  display: flex;
+  gap: 0.6em;
 }
+.profiles div:focus-within {
+  background-color: #717171;
+}
+
+.profiles div .button {
+  flex-grow: 1;
+}
+
 menu:has(#readerViewA:checked) ~ .profileA,
 menu:has(#readerViewB:checked) ~ .profileB,
 menu:has(#readerViewC:checked) ~ .profileC {
@@ -32,15 +42,9 @@ menu:has(#readerViewC:checked) ~ .profileC {
   border: 0.1em solid currentColor;
   padding: 0.5em 1em;
   font-weight: bold;
-  display: grid;
-  align-items: center;
 }
 .button:hover {
   cursor: pointer;
-}
-/* temporary style to hide/show enable/diable button */
-.highlight {
-  display: none;
 }
 input[role='menuitemradio']:focus + .button {
   outline: 2px solid Highlight;
