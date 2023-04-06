@@ -3,13 +3,13 @@ import ReactDOM from 'react-dom/client'
 
 import enableReaderView from './utils/enableReaderView'
 import disableReaderView from './utils/disableReaderView'
-import initialState from './utils/initialState'
+import { initialState, readerViewEnabled } from './utils/initialState'
 
 import './css/styles.css'
 
 const Popup = () => {
   const [profile, setProfile] = useState(initialState)
-  const [isReaderViewEnabled, setIsReaderViewEnabled] = useState(JSON.parse(localStorage.getItem('readerViewEnabled')) || false)
+  const [isReaderViewEnabled, setIsReaderViewEnabled] = useState(readerViewEnabled)
 
   const toggleReaderView = (profile, readerViewEnabled) => {
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
@@ -33,88 +33,98 @@ const Popup = () => {
 
   return (
     // move into separate components
-    <form id='optionsForm'>
+    <div id='optionsForm'>
       <menu role='menubar' className='profiles'>
-        <input
-          role='menuitemradio'
-          type='radio'
-          name='readerviewProfile'
-          id='readerViewA'
-          value='A'
-          checked={profile.currentProfile === 'A'}
-          onChange={(e) => {
-            setProfile((profile) => ({
-              ...profile,
-              currentProfile: e.target.value,
-            }))
-          }}
-        />
-        <label className='button' id='readerViewALabel' htmlFor='readerViewA'>
-          {profile.profileA_name}
-        </label>
-        <input
-          role='menuitemradio'
-          type='radio'
-          name='readerviewProfile'
-          id='readerViewB'
-          value='B'
-          checked={profile.currentProfile === 'B'}
-          onChange={(e) => {
-            setProfile((profile) => ({
-              ...profile,
-              currentProfile: e.target.value,
-            }))
-          }}
-        />
-        <label className='button' id='readerViewBLabel' htmlFor='readerViewB'>
-          {profile.profileB_name}
-        </label>
-        <input
-          role='menuitemradio'
-          type='radio'
-          name='readerviewProfile'
-          id='readerViewC'
-          value='C'
-          checked={profile.currentProfile === 'C'}
-          onChange={(e) => {
-            setProfile((profile) => ({
-              ...profile,
-              currentProfile: e.target.value,
-            }))
-          }}
-        />
-        <label className='button' id='readerViewCLabel' htmlFor='readerViewC'>
-          {profile.profileC_name}
-        </label>
-        <button
-          className={`button${isReaderViewEnabled ? '' : ' highlight'}`}
-          id='readerViewOff'
-          onClick={(e) => {
-            e.preventDefault()
-            toggleReaderView(null, false)
-          }}
-        >
-          Disable Reader View
-        </button>
-        <button
-          className={`button${isReaderViewEnabled ? ' highlight' : ''}`}
-          id='readerViewOn'
-          onClick={(e) => {
-            e.preventDefault()
-            toggleReaderView(profile, true)
-          }}
-        >
-          Enable Reader View
-        </button>
+        <div>
+          <input
+            role='menuitemradio'
+            type='radio'
+            name='readerviewProfile'
+            id='readerViewA'
+            value='A'
+            checked={profile.currentProfile === 'A'}
+            onChange={(e) => {
+              setProfile((profile) => ({
+                ...profile,
+                currentProfile: e.target.value,
+              }))
+            }}
+          />
+          <label className='button' id='readerViewALabel' htmlFor='readerViewA'>
+            {profile.profileA_name}
+          </label>
+          <input
+            role='menuitemradio'
+            type='radio'
+            name='readerviewProfile'
+            id='readerViewB'
+            value='B'
+            checked={profile.currentProfile === 'B'}
+            onChange={(e) => {
+              setProfile((profile) => ({
+                ...profile,
+                currentProfile: e.target.value,
+              }))
+            }}
+          />
+          <label className='button' id='readerViewBLabel' htmlFor='readerViewB'>
+            {profile.profileB_name}
+          </label>
+          <input
+            role='menuitemradio'
+            type='radio'
+            name='readerviewProfile'
+            id='readerViewC'
+            value='C'
+            checked={profile.currentProfile === 'C'}
+            onChange={(e) => {
+              setProfile((profile) => ({
+                ...profile,
+                currentProfile: e.target.value,
+              }))
+            }}
+          />
+          <label className='button' id='readerViewCLabel' htmlFor='readerViewC'>
+            {profile.profileC_name}
+          </label>
+        </div>
+        <div>
+          <input
+            role='menuitemradio'
+            type='radio'
+            name='enableReaderview'
+            id='readerViewOff'
+            checked={isReaderViewEnabled === false}
+            onChange={(e) => {
+              toggleReaderView(null, false)
+              setIsReaderViewEnabled(false)
+            }}
+          />
+          <label className='button toggleReaderView' id='readerViewOffLabel' htmlFor='readerViewOff'>
+            Off
+          </label>
+          <input
+            role='menuitemradio'
+            type='radio'
+            name='enableReaderview'
+            id='readerViewOn'
+            checked={isReaderViewEnabled === true}
+            onChange={(e) => {
+              toggleReaderView(profile, true)
+              setIsReaderViewEnabled(true)
+            }}
+          />
+          <label className='button toggleReaderView' id='readerViewOnLabel' htmlFor='readerViewOn'>
+            On
+          </label>
+        </div>
         <button
           className='button'
           onClick={(e) => {
             e.preventDefault()
             localStorage.clear()
             setProfile(initialState)
-            if (isReaderViewEnabled) {
-              toggleReaderView(profile, true)
-            }
+            if (isReaderViewEnabled) toggleReaderView(profile, true)
           }}
         >
           Reset
@@ -539,7 +549,7 @@ const Popup = () => {
           </label>
         </div>
       </details>
-    </form>
+    </div>
   )
 }
 
