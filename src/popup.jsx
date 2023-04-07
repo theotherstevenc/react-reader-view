@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import ReactDOM from 'react-dom/client'
-import logo from './img/email-reader.svg'
-import EMClogo from './img/EMC-Logo.svg'
-import EMClogoW from './img/EMC-Logo-W.svg'
+import Header from './components/Header'
+import Footer from './components/Footer'
 
 import enableReaderView from './utils/enableReaderView'
 import disableReaderView from './utils/disableReaderView'
@@ -15,14 +14,14 @@ const Popup = () => {
   const [isReaderViewEnabled, setIsReaderViewEnabled] = useState(readerViewEnabled)
 
   const toggleReaderView = (profile, readerViewEnabled) => {
-    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-      const activeTabId = tabs[0].id
-      chrome.scripting.executeScript({
-        target: { tabId: activeTabId },
-        args: [profile],
-        function: readerViewEnabled ? enableReaderView : disableReaderView,
-      })
-    })
+    // chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+    //   const activeTabId = tabs[0].id
+    //   chrome.scripting.executeScript({
+    //     target: { tabId: activeTabId },
+    //     args: [profile],
+    //     function: readerViewEnabled ? enableReaderView : disableReaderView,
+    //   })
+    // })
     localStorage.setItem('readerViewEnabled', readerViewEnabled)
     setIsReaderViewEnabled(readerViewEnabled)
   }
@@ -37,10 +36,7 @@ const Popup = () => {
   return (
     // move into separate components
     <>
-      <h1>
-        Email Reader View
-        <img src={logo} alt='' />
-      </h1>
+      <Header />
       <form id='optionsForm'>
         <menu role='menubar' className='profiles'>
           <div>
@@ -556,14 +552,7 @@ const Popup = () => {
           </div>
         </details>
       </form>
-      <p className='emc-credit'>
-        <a href='https://emailmarkup.org/' target='_blank'>
-          <picture>
-            <source srcSet={EMClogoW} media='(prefers-color-scheme: dark)' />
-            <img src={EMClogo} alt='Email Markup Consortium' />
-          </picture>
-        </a>
-      </p>
+      <Footer />
     </>
   )
 }
