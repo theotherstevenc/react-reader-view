@@ -1,7 +1,6 @@
 import React from 'react'
-import { useState } from 'react'
 
-const Details = (profile, setProfile) => {
+const Details = ({ profile, setProfile }) => {
   return (
     <details>
       <summary>General settings</summary>

@@ -13,14 +13,14 @@ const Popup = () => {
   const [isReaderViewEnabled, setIsReaderViewEnabled] = useState(readerViewEnabled)
 
   const toggleReaderView = (profile, readerViewEnabled) => {
-    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-      const activeTabId = tabs[0].id
-      chrome.scripting.executeScript({
-        target: { tabId: activeTabId },
-        args: [profile],
-        function: readerViewEnabled ? enableReaderView : disableReaderView,
-      })
-    })
+    // chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+    //   const activeTabId = tabs[0].id
+    //   chrome.scripting.executeScript({
+    //     target: { tabId: activeTabId },
+    //     args: [profile],
+    //     function: readerViewEnabled ? enableReaderView : disableReaderView,
+    //   })
+    // })
     localStorage.setItem('readerViewEnabled', readerViewEnabled)
     setIsReaderViewEnabled(readerViewEnabled)
   }

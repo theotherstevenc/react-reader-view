@@ -6,7 +6,6 @@ const ProfileButtons = ({ profile, setProfile, profileButtonDataProperties }) =>
       {profileButtonDataProperties.map((el) => (
         <Fragment key={el.id}>
           <input
-            role='menuitemradio'
             type='radio'
             name='readerviewProfile'
             id={el.id}

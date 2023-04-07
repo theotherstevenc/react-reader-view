@@ -4,7 +4,6 @@ const ToggleProfileButtons = ({ profile, toggleReaderView, isReaderViewEnabled }
   return (
     <div>
       <input
-        role='menuitemradio'
         type='radio'
         name='enableReaderview'
         id='readerViewOff'
@@ -17,7 +16,6 @@ const ToggleProfileButtons = ({ profile, toggleReaderView, isReaderViewEnabled }
         Off
       </label>
       <input
-        role='menuitemradio'
         type='radio'
         name='enableReaderview'
         id='readerViewOn'
