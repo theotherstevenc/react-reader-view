@@ -1,4 +1,4 @@
-const localProfile = localStorage.getItem('profile')
+const localProfile = JSON.parse(localStorage.getItem('profile'))
 
 export const initialState = {
   currentProfile: localProfile?.currentProfile || 'A',
@@ -25,4 +25,4 @@ export const initialState = {
   blockImages: localProfile?.blockImages || false,
 }
 
-export const readerViewEnabled = localStorage.getItem('readerViewEnabled') || false
+export const readerViewEnabled = JSON.parse(localStorage.getItem('readerViewEnabled')) || false
