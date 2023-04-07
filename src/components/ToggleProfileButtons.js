@@ -12,7 +12,7 @@ const ToggleProfileButtons = ({ profile, toggleReaderView, isReaderViewEnabled }
           toggleReaderView(null, false)
         }}
       />
-      <label className='button toggleReaderView' id='readerViewOffLabel' htmlFor='readerViewOff'>
+      <label className='button toggleReaderView' htmlFor='readerViewOff'>
         Off
       </label>
       <input
@@ -24,7 +24,7 @@ const ToggleProfileButtons = ({ profile, toggleReaderView, isReaderViewEnabled }
           toggleReaderView(profile, true)
         }}
       />
-      <label className='button toggleReaderView' id='readerViewOnLabel' htmlFor='readerViewOn'>
+      <label className='button toggleReaderView' htmlFor='readerViewOn'>
         On
       </label>
     </div>

@@ -13,14 +13,14 @@ const Popup = () => {
   const [isReaderViewEnabled, setIsReaderViewEnabled] = useState(readerViewEnabled)
 
   const toggleReaderView = (profile, readerViewEnabled) => {
-    // chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-    //   const activeTabId = tabs[0].id
-    //   chrome.scripting.executeScript({
-    //     target: { tabId: activeTabId },
-    //     args: [profile],
-    //     function: readerViewEnabled ? enableReaderView : disableReaderView,
-    //   })
-    // })
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      const activeTabId = tabs[0].id
+      chrome.scripting.executeScript({
+        target: { tabId: activeTabId },
+        function: readerViewEnabled ? enableReaderView : disableReaderView,
+        args: [profile],
+      })
+    })
     localStorage.setItem('readerViewEnabled', readerViewEnabled)
     setIsReaderViewEnabled(readerViewEnabled)
   }
@@ -41,9 +41,9 @@ const Popup = () => {
           <ToggleProfileButtons profile={profile} toggleReaderView={toggleReaderView} isReaderViewEnabled={isReaderViewEnabled} />
           <ResetButton profile={profile} setProfile={setProfile} toggleReaderView={toggleReaderView} initialState={initialState} />
         </menu>
-        <Fieldset currentProfile='A' profile={profile} setProfile={setProfile} fieldsetDataProfiles={fieldsetDataProfiles} />
-        <Fieldset currentProfile='B' profile={profile} setProfile={setProfile} fieldsetDataProfiles={fieldsetDataProfiles} />
-        <Fieldset currentProfile='C' profile={profile} setProfile={setProfile} fieldsetDataProfiles={fieldsetDataProfiles} />
+        <Fieldset assignedProfile='A' profile={profile} setProfile={setProfile} fieldsetDataProfiles={fieldsetDataProfiles} />
+        <Fieldset assignedProfile='B' profile={profile} setProfile={setProfile} fieldsetDataProfiles={fieldsetDataProfiles} />
+        <Fieldset assignedProfile='C' profile={profile} setProfile={setProfile} fieldsetDataProfiles={fieldsetDataProfiles} />
         <Details profile={profile} setProfile={setProfile} />
       </form>
       <Footer />

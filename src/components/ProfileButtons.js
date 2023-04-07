@@ -18,7 +18,7 @@ const ProfileButtons = ({ profile, setProfile, profileButtonDataProperties }) =>
               })
             }}
           />
-          <label className='button' id={el.id + `Label`} htmlFor={el.id} style={{ backgroundColor: [el.styles.backgroundColor], color: [el.styles.color] }}>
+          <label className='button' htmlFor={el.id} style={{ backgroundColor: [el.styles.backgroundColor], color: [el.styles.color] }}>
             {profile[`profile` + el.profile + `_name`]}
           </label>
         </Fragment>

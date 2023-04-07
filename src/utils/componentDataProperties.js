@@ -1,33 +1,35 @@
-export const fieldsetDataProfiles = [
-  {
-    type: 'text',
-    name: 'nameA',
-    id: 'nameA',
-    value: 'profileA_name',
-    title: 'Name:',
-  },
-  {
-    type: 'color',
-    name: 'backgroundColorA',
-    id: 'backgroundColorA',
-    value: 'profileA_backgroundColor',
-    title: 'Background:',
-  },
-  {
-    type: 'color',
-    name: 'colorA',
-    id: 'colorA',
-    value: 'profileA_color',
-    title: 'Text colour:',
-  },
-  {
-    type: 'color',
-    name: 'linkColorA',
-    id: 'linkColorA',
-    value: 'profileA_linkColor',
-    title: 'Link colour:',
-  },
-]
+export const fieldsetDataProfiles = (profile) => {
+  return [
+    {
+      type: 'text',
+      name: 'name' + profile,
+      id: 'name' + profile,
+      value: 'profile' + profile + '_name',
+      title: 'Name:',
+    },
+    {
+      type: 'color',
+      name: 'backgroundColor' + profile,
+      id: 'backgroundColor' + profile,
+      value: 'profile' + profile + '_backgroundColor',
+      title: 'Background:',
+    },
+    {
+      type: 'color',
+      name: 'color' + profile,
+      id: 'color' + profile,
+      value: 'profile' + profile + '_color',
+      title: 'Text colour:',
+    },
+    {
+      type: 'color',
+      name: 'linkColor' + profile,
+      id: 'linkColor' + profile,
+      value: 'profile' + profile + '_linkColor',
+      title: 'Link colour:',
+    },
+  ]
+}
 
 export const profileButtonDataProperties = [
   {
