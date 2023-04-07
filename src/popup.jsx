@@ -33,7 +33,7 @@ const Popup = () => {
 
   return (
     // move into separate components
-    <div id='optionsForm'>
+    <form id='optionsForm'>
       <menu role='menubar' className='profiles'>
         <div>
           <input
@@ -50,7 +50,7 @@ const Popup = () => {
               }))
             }}
           />
-          <label className='button' id='readerViewALabel' htmlFor='readerViewA'>
+          <label className='button' id='readerViewALabel' htmlFor='readerViewA' style={{ backgroundColor: profile.profileA_backgroundColor, color: profile.profileA_color }}>
             {profile.profileA_name}
           </label>
           <input
@@ -67,7 +67,7 @@ const Popup = () => {
               }))
             }}
           />
-          <label className='button' id='readerViewBLabel' htmlFor='readerViewB'>
+          <label className='button' id='readerViewBLabel' htmlFor='readerViewB' style={{ backgroundColor: profile.profileB_backgroundColor, color: profile.profileB_color }}>
             {profile.profileB_name}
           </label>
           <input
@@ -84,7 +84,7 @@ const Popup = () => {
               }))
             }}
           />
-          <label className='button' id='readerViewCLabel' htmlFor='readerViewC'>
+          <label className='button' id='readerViewCLabel' htmlFor='readerViewC' style={{ backgroundColor: profile.profileC_backgroundColor, color: profile.profileA_color }}>
             {profile.profileC_name}
           </label>
         </div>
@@ -119,9 +119,9 @@ const Popup = () => {
           </label>
         </div>
         <button
+          type='button'
           className='button'
           onClick={(e) => {
-            e.preventDefault()
             localStorage.clear()
             setProfile(initialState)
             if (isReaderViewEnabled) toggleReaderView(profile, true)
@@ -130,7 +130,7 @@ const Popup = () => {
           Reset
         </button>
       </menu>
-      <fieldset className='profileA' hidden>
+      <fieldset className={profile.currentProfile === 'A' ? 'display-profile' : ''} hidden>
         <legend>Profile settings</legend>
         <div className='selectStyles'>
           <label>
@@ -209,7 +209,7 @@ const Popup = () => {
           </label>
         </div>
       </fieldset>
-      <fieldset className='profileB' hidden>
+      <fieldset className={profile.currentProfile === 'B' ? 'display-profile' : ''} hidden>
         <legend>Profile settings</legend>
         <div className='selectStyles'>
           <label>
@@ -288,7 +288,7 @@ const Popup = () => {
           </label>
         </div>
       </fieldset>
-      <fieldset className='profileC' hidden>
+      <fieldset className={profile.currentProfile === 'C' ? 'display-profile' : ''} hidden>
         <legend>Profile settings</legend>
         <div className='selectStyles'>
           <label>
@@ -549,7 +549,7 @@ const Popup = () => {
           </label>
         </div>
       </details>
-    </div>
+    </form>
   )
 }
 

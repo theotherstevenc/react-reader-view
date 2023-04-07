@@ -23,18 +23,18 @@ h1 img {
 .profiles div {
   display: flex;
   gap: 0.6em;
+  transition: 0.05s all;
 }
 .profiles div:focus-within {
-  background-color: #717171;
+  background-color: #505050;
+  transform: scale(1.01);
 }
 
 .profiles div .button {
   flex-grow: 1;
 }
 
-menu:has(#readerViewA:checked) ~ .profileA,
-menu:has(#readerViewB:checked) ~ .profileB,
-menu:has(#readerViewC:checked) ~ .profileC {
+.display-profile {
   display: block;
 }
 .button {
@@ -47,8 +47,12 @@ menu:has(#readerViewC:checked) ~ .profileC {
   cursor: pointer;
 }
 input[role='menuitemradio']:focus + .button {
-  outline: 2px solid Highlight;
-  outline: auto 5px -webkit-focus-ring-color;
+  outline: 2px solid Highlight !important;
+  outline: auto 5px -webkit-focus-ring-color !important;
+}
+input[role='menuitemradio']:checked + .button {
+  outline: 0.2em solid var(--accent, #0d5c63);
+  /* box-shadow: 0 0.4em 0.25em -0.3em var(--text, #111); */
 }
 .profiles input {
   appearance: none;
@@ -57,10 +61,6 @@ input[role='menuitemradio']:focus + .button {
   width: 1px;
   position: absolute;
   opacity: 0;
-}
-.profiles input:checked + label:not(:focus) {
-  outline: 0.2em solid var(--accent, #0d5c63);
-  /* box-shadow: 0 0.4em 0.25em -0.3em var(--text, #111); */
 }
 
 fieldset,
