@@ -1,4 +1,4 @@
-const enableReaderView = (profile) => {
+const enableReaderView = (profile, settings, currentProfile) => {
   let wrappers = []
 
   const styleSheet = `
@@ -56,43 +56,43 @@ const enableReaderView = (profile) => {
         display: none;
     }
     .readerView[data-readerviewprofile="A"]{
-      background:${profile.profileA_backgroundColor};
-      color: ${profile.profileA_color};
+      background:${profile[0].backgroundColor};
+      color: ${profile[0].color};
     }
     .readerView[data-readerviewprofile="A"] :is(a, a *) {
         text-decoration: underline;
-        color:${profile.profileA_linkColor};
+        color:${profile[0].linkColor};
     }
     .readerView[data-readerviewprofile="B"]{
-      background:${profile.profileB_backgroundColor};
-      color: ${profile.profileB_color};
+      background:${profile[1].backgroundColor};
+      color: ${profile[1].color};
     }
     .readerView[data-readerviewprofile="B"] :is(a, a *) {
         text-decoration: underline;
-        color:${profile.profileB_linkColor};
+        color:${profile[1].linkColor};
     }
     .readerView[data-readerviewprofile="C"]{
-      background:${profile.profileC_backgroundColor};
-      color: ${profile.profileC_color};
+      background:${profile[2].backgroundColor};
+      color: ${profile[2].color};
     }
     .readerView[data-readerviewprofile="C"] :is(a, a *) {
         text-decoration: underline;
-        color:${profile.profileC_linkColor};
+        color:${profile[2].linkColor};
     }
     .readerView.readerView {
-      text-align:${profile.textAlign};
-      font-family:${profile.fontFamily};
-      font-size:${profile.fontSize}rem;
-      line-height:${profile.lineHeight};
-      word-spacing:${profile.wordSpacing}em;
-      letter-spacing:${profile.letterSpacing}em;
-      max-width: ${profile.maxWidth}em;
+      text-align:${settings.textAlign};
+      font-family:${settings.fontFamily};
+      font-size:${settings.fontSize}rem;
+      line-height:${settings.lineHeight};
+      word-spacing:${settings.wordSpacing}em;
+      letter-spacing:${settings.letterSpacing}em;
+      max-width: ${settings.maxWidth}em;
       margin: 0 auto;
       overflow: auto; /* For when things can't collapse far enough */
       padding: 1em !important; /* override yahoo */
     }
     .readerView.readerView *{
-      text-align:${profile.textAlign};
+      text-align:${settings.textAlign};
     }
   .readerView.readerView button{display:none} /* Outlook zoom button */
   `
@@ -134,7 +134,7 @@ const enableReaderView = (profile) => {
     const iframe = wrapper.querySelector('iframe')
     if (iframe === null) {
       wrapper.classList.add('readerView')
-      wrapper.setAttribute('data-readerViewProfile', profile.currentProfile)
+      wrapper.setAttribute('data-readerViewProfile', currentProfile)
       document.querySelector('#ervStyleElement').replaceChildren(styleSheet)
     } else {
       alert('Reader view does not yet support AMP email')
@@ -158,13 +158,13 @@ const enableReaderView = (profile) => {
       item.remove()
     }
 
-    if (item.hasAttribute('data-emoji') && profile.blockImages == false) {
+    if (item.hasAttribute('data-emoji') && settings.blockImages == false) {
       let alt = item.getAttribute('alt')
       item.insertAdjacentHTML('beforebegin', '<span data-erv-emoji>' + alt + '</span>')
       item.setAttribute('date-hidden', '')
     }
 
-    if (profile.blockImages) {
+    if (settings.blockImages) {
       if (item.tagName == 'IMG' && !item.hasAttribute('hidden')) {
         let alt = item.getAttribute('alt')
         if (alt == null || alt.trim() == '') {
