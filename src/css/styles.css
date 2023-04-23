@@ -23,11 +23,11 @@ h1 img {
 .profiles div {
   display: flex;
   gap: 0.6em;
-  transition: 0.05s all;
+  transition: 0.08s all;
 }
 .profiles div:focus-within {
   background-color: #505050;
-  transform: scale(1.01);
+  transform: scale(1.03);
 }
 
 .profiles div .button {
@@ -46,14 +46,31 @@ h1 img {
 .button:hover {
   cursor: pointer;
 }
-input[role='menuitemradio']:focus + .button {
+
+#toggleReaderView {
+  margin: 0 0 1em 0;
+}
+[role='menubar'] input:focus + .button {
   outline: 2px solid Highlight !important;
   outline: auto 5px -webkit-focus-ring-color !important;
 }
-input[role='menuitemradio']:checked + .button {
-  outline: 0.2em solid var(--accent, #0d5c63);
-  /* box-shadow: 0 0.4em 0.25em -0.3em var(--text, #111); */
+[role='menubar'] input:checked + .button {
+  outline: 0.2em solid var(--accent, #0d5c63) !important;
+  /* important prevents the outline from being visible on click. refactor this */
 }
+[role='menubar'] {
+  padding: 0;
+}
+
+[role='menubar'] .profiles {
+  display: block;
+  padding: revert;
+}
+
+[role='menubar'] legend {
+  text-align: left;
+}
+
 .profiles input {
   appearance: none;
   -webkit-appearance: none;
