@@ -19,7 +19,6 @@ const MenuFieldset = ({ currentProfile, setCurrentProfile }) => {
                     value={id}
                     onChange={(e) => {
                       setCurrentProfile(e.target.value)
-                      localStorage.setItem('currentProfile', e.target.value)
                     }}
                   />
                   <label className='button' id={profile + 'Label'} htmlFor={profile}>
