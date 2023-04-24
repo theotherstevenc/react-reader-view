@@ -8,7 +8,6 @@ const ToggleButton = ({ toggleButton, setToggleButton }) => {
       id='toggleReaderView'
       onClick={() => {
         setToggleButton(!toggleButton)
-        localStorage.setItem('toggleButton', !toggleButton)
       }}
     >
       {toggleButton ? 'Disable' : 'Enable'} Reader View

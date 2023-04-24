@@ -21,7 +21,6 @@ const ProfileFieldset = ({ currentProfile, profile, setProfile }) => {
                       setProfile((prevProfiles) => {
                         const newProfiles = [...prevProfiles]
                         newProfiles[index].name = e.target.value
-                        localStorage.setItem('localProfile', JSON.stringify(newProfiles))
                         return newProfiles
                       })
                     }}
@@ -42,7 +41,6 @@ const ProfileFieldset = ({ currentProfile, profile, setProfile }) => {
                       setProfile((prevProfiles) => {
                         const newProfiles = [...prevProfiles]
                         newProfiles[index].backgroundColor = e.target.value
-                        localStorage.setItem('localProfile', JSON.stringify(newProfiles))
                         return newProfiles
                       })
                     }}
@@ -63,7 +61,6 @@ const ProfileFieldset = ({ currentProfile, profile, setProfile }) => {
                       setProfile((prevProfiles) => {
                         const newProfiles = [...prevProfiles]
                         newProfiles[index].color = e.target.value
-                        localStorage.setItem('localProfile', JSON.stringify(newProfiles))
                         return newProfiles
                       })
                     }}
@@ -84,7 +81,6 @@ const ProfileFieldset = ({ currentProfile, profile, setProfile }) => {
                       setProfile((prevProfiles) => {
                         const newProfiles = [...prevProfiles]
                         newProfiles[index].linkColor = e.target.value
-                        localStorage.setItem('localProfile', JSON.stringify(newProfiles))
                         return newProfiles
                       })
                     }}
