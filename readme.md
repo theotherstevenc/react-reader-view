@@ -45,10 +45,10 @@ Contents of this directory are copied into `dist/` during the build process. Con
 
 ### `utils/`
 
-- `initialState.js` sets default values for the extension, if they are not currently saved in local storage
-- `disableReaderView.js` contains logic to disable the extension
-- `enableReaderView.js` contains logic to enable the extension
-- `css/styles.css` styles are injected automatically as declared in this file
+- `profiles.js`, `generalSettings.js` set initial values from localstorage, or from hardcoded defaults
+- `disableReaderView.js` logic to disable the extension
+- `enableReaderView.js` logic to enable the extension
+- `css/styles.css` styles are injected automatically
 
 ## Notes
 
