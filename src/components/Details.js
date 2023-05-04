@@ -139,7 +139,7 @@ const Details = ({ settings, setSettings, setProfile, generalSettings }) => {
               checked={settings.blockImages}
               onChange={(e) => {
                 setSettings({ ...settings, blockImages: e.target.checked })
-                localStorage.setItem('blockImages', e.target.checked)
+                localStorage.setItem('blockImages', JSON.stringify(e.target.checked))
               }}
             />
           </span>
