@@ -36,6 +36,7 @@ const Form = () => {
     currentProfile,
     setCurrentProfile,
     toggleReaderView,
+    generalSettings,
   }
 
   useEffect(() => {

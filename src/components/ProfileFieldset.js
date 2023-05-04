@@ -1,10 +1,9 @@
 import React from 'react'
-import profiles from '../utils/profiles'
 
 const ProfileFieldset = ({ currentProfile, profile, setProfile }) => {
   return (
     <>
-      {profiles.map(({ id }, index) => {
+      {profile.map(({ id }, index) => {
         return (
           <fieldset key={id} className={currentProfile === id ? 'display-profile' : ''} hidden>
             <legend>Profile {id}</legend>

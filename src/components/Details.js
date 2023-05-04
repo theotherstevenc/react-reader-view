@@ -1,6 +1,7 @@
 import React from 'react'
+import ResetButton from './ResetButton'
 
-const Details = ({ settings, setSettings }) => {
+const Details = ({ settings, setSettings, setProfile, generalSettings }) => {
   return (
     <details>
       <summary>General settings</summary>
@@ -137,13 +138,14 @@ const Details = ({ settings, setSettings }) => {
               id='blockImages'
               checked={settings.blockImages}
               onChange={(e) => {
-                setSettings({ ...settings, blockImages: e.target.value })
-                localStorage.setItem('blockImages', e.target.value)
+                setSettings({ ...settings, blockImages: e.target.checked })
+                localStorage.setItem('blockImages', e.target.checked)
               }}
             />
           </span>
         </label>
       </div>
+      <ResetButton setProfile={setProfile} setSettings={setSettings} generalSettings={generalSettings} />
     </details>
   )
 }

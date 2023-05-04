@@ -38,11 +38,13 @@ h1 img {
   display: block;
 }
 .button {
+  width: 100%;
   font-size: 1.2em;
   border: 0.1em solid currentColor;
   padding: 0.5em 1em;
   font-weight: bold;
 }
+
 .button:hover {
   cursor: pointer;
 }
