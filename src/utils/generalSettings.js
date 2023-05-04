@@ -7,7 +7,7 @@ const generalSettings = {
   letterSpacing: localStorage.getItem('letterSpacing') || '.08',
   maxWidth: localStorage.getItem('maxWidth') || '40',
   linkColor: localStorage.getItem('linkColor') || '#3101ee',
-  blockImages: localStorage.getItem('blockImages') || false,
+  blockImages: JSON.parse(localStorage.getItem('blockImages')) || false,
 }
 
 export default generalSettings
