@@ -1,14 +1,13 @@
 import React from 'react'
-import profiles from '../utils/profiles'
 
-const MenuFieldset = ({ currentProfile, setCurrentProfile }) => {
+const MenuFieldset = ({ profile, currentProfile, setCurrentProfile }) => {
   return (
     <>
       <menu role='menubar' className='profiles'>
         <fieldset className='profiles'>
           <legend>Profile</legend>
           <div>
-            {profiles.map(({ id, profile, name }) => {
+            {profile.map(({ id, profile, name }) => {
               return (
                 <React.Fragment key={id}>
                   <input
