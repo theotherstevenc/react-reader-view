@@ -12,8 +12,12 @@ import enableReaderView from '../utils/enableReaderView'
 const Form = () => {
   const [profile, setProfile] = useState(profiles)
   const [settings, setSettings] = useState(generalSettings)
-  const [toggleButton, setToggleButton] = useState(JSON.parse(localStorage.getItem('toggleButton')) || false)
-  const [currentProfile, setCurrentProfile] = useState(localStorage.getItem('currentProfile') || 'A')
+  const [toggleButton, setToggleButton] = useState(
+    JSON.parse(localStorage.getItem('toggleButton')) || false,
+  )
+  const [currentProfile, setCurrentProfile] = useState(
+    localStorage.getItem('currentProfile') || 'A',
+  )
 
   const toggleReaderView = (toggleButton, profile, settings, currentProfile) => {
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
