@@ -1,6 +1,6 @@
 import React from 'react'
 
-const ProfileFieldset = ({ currentProfile, profile, setProfile }) => {
+const ProfileFieldset = ({ profile, setProfile, currentProfile }) => {
   return (
     <>
       {profile.map(({ id }, index) => {
@@ -17,10 +17,10 @@ const ProfileFieldset = ({ currentProfile, profile, setProfile }) => {
                     id={'name' + id}
                     value={profile[index].name}
                     onChange={(e) => {
-                      setProfile((prevProfiles) => {
-                        const newProfiles = [...prevProfiles]
-                        newProfiles[index].name = e.target.value
-                        return newProfiles
+                      setProfile((previousProfiles) => {
+                        const updatedProfiles = [...previousProfiles]
+                        updatedProfiles[index].name = e.target.value
+                        return updatedProfiles
                       })
                     }}
                   />
@@ -37,10 +37,10 @@ const ProfileFieldset = ({ currentProfile, profile, setProfile }) => {
                     id={'backgroundColor' + id}
                     value={profile[index].backgroundColor}
                     onChange={(e) => {
-                      setProfile((prevProfiles) => {
-                        const newProfiles = [...prevProfiles]
-                        newProfiles[index].backgroundColor = e.target.value
-                        return newProfiles
+                      setProfile((previousProfiles) => {
+                        const updatedProfiles = [...previousProfiles]
+                        updatedProfiles[index].backgroundColor = e.target.value
+                        return updatedProfiles
                       })
                     }}
                   />
@@ -57,10 +57,10 @@ const ProfileFieldset = ({ currentProfile, profile, setProfile }) => {
                     id={'color' + id}
                     value={profile[index].color}
                     onChange={(e) => {
-                      setProfile((prevProfiles) => {
-                        const newProfiles = [...prevProfiles]
-                        newProfiles[index].color = e.target.value
-                        return newProfiles
+                      setProfile((previousProfiles) => {
+                        const updatedProfiles = [...previousProfiles]
+                        updatedProfiles[index].color = e.target.value
+                        return updatedProfiles
                       })
                     }}
                   />
@@ -77,10 +77,10 @@ const ProfileFieldset = ({ currentProfile, profile, setProfile }) => {
                     id={'linkColor' + id}
                     value={profile[index].linkColor}
                     onChange={(e) => {
-                      setProfile((prevProfiles) => {
-                        const newProfiles = [...prevProfiles]
-                        newProfiles[index].linkColor = e.target.value
-                        return newProfiles
+                      setProfile((previousProfiles) => {
+                        const updatedProfiles = [...previousProfiles]
+                        updatedProfiles[index].linkColor = e.target.value
+                        return updatedProfiles
                       })
                     }}
                   />

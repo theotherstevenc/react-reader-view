@@ -1,7 +1,7 @@
 import React from 'react'
 import ResetButton from './ResetButton'
 
-const Details = ({ settings, setSettings, setProfile, generalSettings }) => {
+const Details = ({ settings, setSettings, setProfile }) => {
   return (
     <details>
       <summary>General settings</summary>
@@ -145,7 +145,7 @@ const Details = ({ settings, setSettings, setProfile, generalSettings }) => {
           </span>
         </label>
       </div>
-      <ResetButton setProfile={setProfile} setSettings={setSettings} generalSettings={generalSettings} />
+      <ResetButton setProfile={setProfile} setSettings={setSettings} />
     </details>
   )
 }
