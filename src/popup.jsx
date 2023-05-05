@@ -13,5 +13,5 @@ root.render(
     <Header />
     <Form />
     <Footer />
-  </React.StrictMode>
+  </React.StrictMode>,
 )
