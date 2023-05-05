@@ -1,6 +1,7 @@
 import React from 'react'
+import generalSettings from '../utils/generalSettings'
 
-const ResetButton = ({ setProfile, setSettings, generalSettings }) => {
+const ResetButton = ({ setProfile, setSettings }) => {
   return (
     <button
       type='button'
