@@ -1,13 +1,12 @@
 const generalSettings = {
   textAlign: localStorage.getItem('textAlign') || 'start',
   fontFamily: localStorage.getItem('fontFamily') || 'sans-serif',
-  fontSize: localStorage.getItem('fontSize') || '1',
-  lineHeight: localStorage.getItem('lineHeight') || '1.5',
-  wordSpacing: localStorage.getItem('wordSpacing') || '.2',
-  letterSpacing: localStorage.getItem('letterSpacing') || '.08',
-  maxWidth: localStorage.getItem('maxWidth') || '40',
+  fontSize: localStorage.getItem('fontSize') || 1,
+  lineHeight: localStorage.getItem('lineHeight') || 1.5,
+  wordSpacing: localStorage.getItem('wordSpacing') || 0.2,
+  letterSpacing: localStorage.getItem('letterSpacing') || 0.08,
+  maxWidth: localStorage.getItem('maxWidth') || 40,
   linkColor: localStorage.getItem('linkColor') || '#3101ee',
   blockImages: JSON.parse(localStorage.getItem('blockImages')) || false,
 }
-
 export default generalSettings
