@@ -1,4 +1,4 @@
-const profiles = JSON.parse(localStorage.getItem('localProfile')) || [
+const initialProfiles = [
   {
     id: 'A',
     profile: 'readerViewA',
@@ -25,4 +25,4 @@ const profiles = JSON.parse(localStorage.getItem('localProfile')) || [
   },
 ]
 
-export default profiles
+export default initialProfiles
