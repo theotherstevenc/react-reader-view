@@ -1,10 +1,45 @@
 import React, { useState, useEffect } from 'react'
 import disableReaderView from '../utils/disableReaderView'
 import enableReaderView from '../utils/enableReaderView'
-import initialProfiles from '../utils/initialProfiles'
-import initialSettings from '../utils/initialSettings'
 
 const App = () => {
+  const initialProfiles = [
+    {
+      id: 'A',
+      profile: 'readerViewA',
+      name: 'Light',
+      backgroundColor: '#FFFDD0',
+      color: '#202020',
+      linkColor: '#3101ee',
+    },
+    {
+      id: 'B',
+      profile: 'readerViewB',
+      name: 'Dark',
+      backgroundColor: '#202020',
+      color: '#eeeeee',
+      linkColor: '#8ab4f8',
+    },
+    {
+      id: 'C',
+      profile: 'readerViewC',
+      name: 'Sepia',
+      backgroundColor: '#ffeedd',
+      color: '#332211',
+      linkColor: '#3101ee',
+    },
+  ]
+  const initialSettings = {
+    textAlign: 'start',
+    fontFamily: 'sans-serif',
+    fontSize: 1,
+    lineHeight: 1.5,
+    wordSpacing: 0.2,
+    letterSpacing: 0.08,
+    maxWidth: 40,
+    linkColor: '#3101ee',
+    blockImages: false,
+  }
   const profilesFromLocalStorage = JSON.parse(localStorage.getItem('localProfiles')) || initialProfiles
   const settingsFromLocalStorage = JSON.parse(localStorage.getItem('localSettings')) || initialSettings
   const currentProfileFromLocalStorage = localStorage.getItem('currentProfile') || 'A'
@@ -301,17 +336,17 @@ const App = () => {
             </span>
           </label>
         </div>
+        <button
+          type='button'
+          className='button button-reset'
+          onClick={() => {
+            setProfiles(initialProfiles)
+            setSettings(initialSettings)
+          }}
+        >
+          Reset
+        </button>
       </details>
-      <button
-        type='button'
-        className='button button-reset'
-        onClick={() => {
-          setProfiles(initialProfiles)
-          setSettings(initialSettings)
-        }}
-      >
-        Reset
-      </button>
     </form>
   )
 }
