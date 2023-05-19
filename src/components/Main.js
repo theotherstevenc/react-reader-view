@@ -70,11 +70,10 @@ const App = () => {
   }, [toggleButton, profiles, settings, currentProfile])
 
   return (
-    <form id='optionsForm'>
+    <>
       <button
         type='button'
-        className='button'
-        id='toggleReaderView'
+        className='button toggle-button'
         onClick={() => {
           setToggleButton(!toggleButton)
         }}
@@ -83,14 +82,14 @@ const App = () => {
       </button>
       <menu role='menubar' className='profiles'>
         <fieldset className='profiles'>
-          <legend>Profile</legend>
+          <legend>Select Profile</legend>
           <div>
             {profiles.map(({ id, profile, name }) => {
               return (
                 <React.Fragment key={id}>
                   <input
                     type='radio'
-                    name='readerviewProfile'
+                    name='profiles'
                     id={profile}
                     checked={currentProfile === id}
                     value={id}
@@ -98,7 +97,7 @@ const App = () => {
                       setCurrentProfile(e.target.value)
                     }}
                   />
-                  <label className='button' id={profile + 'Label'} htmlFor={profile}>
+                  <label className='button' htmlFor={profile}>
                     {name}
                   </label>
                 </React.Fragment>
@@ -107,18 +106,17 @@ const App = () => {
           </div>
         </fieldset>
       </menu>
-      {profiles.map(({ id }, index) => {
+
+      {profiles.map(({ id, name }, index) => {
         return (
           <fieldset key={id} className={currentProfile === id ? 'display-profile' : ''} hidden>
-            <legend>Profile {id}</legend>
+            <legend>{name} Profile</legend>
             <div className='selectStyles'>
               <label>
                 <span>Name:</span>
                 <span>
                   <input
                     type='text'
-                    name={'name' + id}
-                    id={'name' + id}
                     value={profiles[index].name}
                     onChange={(e) => {
                       setProfiles((previousProfiles) => {
@@ -131,14 +129,10 @@ const App = () => {
                 </span>
               </label>
               <label>
-                <span>
-                  Background: <span id={'backgroundColorValue' + id}></span>
-                </span>
+                <span>Background:</span>
                 <span>
                   <input
                     type='color'
-                    name={'backgroundColor' + id}
-                    id={'backgroundColor' + id}
                     value={profiles[index].backgroundColor}
                     onChange={(e) => {
                       setProfiles((previousProfiles) => {
@@ -151,14 +145,10 @@ const App = () => {
                 </span>
               </label>
               <label>
-                <span>
-                  Text colour: <span id={'colorValue' + id}></span>
-                </span>
+                <span>Text:</span>
                 <span>
                   <input
                     type='color'
-                    name={'color' + id}
-                    id={'color' + id}
                     value={profiles[index].color}
                     onChange={(e) => {
                       setProfiles((previousProfiles) => {
@@ -171,14 +161,10 @@ const App = () => {
                 </span>
               </label>
               <label>
-                <span>
-                  Link colour: <span id={'linkColorValue' + id}></span>
-                </span>
+                <span>Links:</span>
                 <span>
                   <input
                     type='color'
-                    name={'linkColor' + id}
-                    id={'linkColor' + id}
                     value={profiles[index].linkColor}
                     onChange={(e) => {
                       setProfiles((previousProfiles) => {
@@ -198,9 +184,7 @@ const App = () => {
         <summary>General settings</summary>
         <div className='selectStyles'>
           <label>
-            <span>
-              Width: <span id='maxWidthValue'></span>
-            </span>
+            <span>Width:</span>
             <span>
               <input
                 type='range'
@@ -218,9 +202,7 @@ const App = () => {
             </span>
           </label>
           <label>
-            <span>
-              Font family: <span id='fontFamilyValue'></span>
-            </span>
+            <span>Font family:</span>
             <span>
               <select
                 name='fontFamily'
@@ -231,17 +213,16 @@ const App = () => {
                   JSON.parse(localStorage.getItem('localSettings')).fontFamily = e.target.value
                 }}
               >
-                <option value='serif'>serif</option>
-                <option value='sans-serif'>sans-serif</option>
-                <option value='monospace'>monospace</option>
-                <option value='cursive'>cursive</option>
+                {['serif', 'sans-serif', 'monospace', 'cursive'].map((option) => (
+                  <option key={option} value={option}>
+                    {option}
+                  </option>
+                ))}
               </select>
             </span>
           </label>
           <label>
-            <span>
-              Font size: <span id='fontSizeValue'></span>
-            </span>
+            <span>Font size:</span>
             <span>
               <input
                 type='range'
@@ -259,9 +240,7 @@ const App = () => {
             </span>
           </label>
           <label>
-            <span>
-              Line height: <span id='lineHeightValue'></span>
-            </span>
+            <span>Line height:</span>
             <span>
               <input
                 type='range'
@@ -279,9 +258,7 @@ const App = () => {
             </span>
           </label>
           <label>
-            <span>
-              Word spacing: <span id='wordSpacingValue'></span>
-            </span>
+            <span>Word spacing:</span>
             <span>
               <input
                 type='range'
@@ -299,9 +276,7 @@ const App = () => {
             </span>
           </label>
           <label>
-            <span>
-              Letter spacing: <span id='letterSpacingValue'></span>
-            </span>
+            <span>Letter spacing:</span>
             <span>
               <input
                 type='range'
@@ -319,9 +294,7 @@ const App = () => {
             </span>
           </label>
           <label>
-            <span>
-              Block images: <span id='blockImagesValue'></span>
-            </span>
+            <span>Block images:</span>
             <span>
               <input
                 type='checkbox'
@@ -347,7 +320,7 @@ const App = () => {
           Reset
         </button>
       </details>
-    </form>
+    </>
   )
 }
 

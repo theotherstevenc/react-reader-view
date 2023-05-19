@@ -49,7 +49,7 @@ h1 img {
   cursor: pointer;
 }
 
-#toggleReaderView {
+.toggle-button {
   margin: 0 0 1em 0;
 }
 [role='menubar'] input:focus + .button {
@@ -59,9 +59,6 @@ h1 img {
 [role='menubar'] input:checked + .button {
   outline: 0.2em solid var(--accent, #0d5c63) !important;
   /* important prevents the outline from being visible on click. refactor this */
-}
-[role='menubar'] {
-  padding: 0;
 }
 
 [role='menubar'] .profiles {
