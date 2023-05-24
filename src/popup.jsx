@@ -9,9 +9,9 @@ import './css/styles.css'
 const root = ReactDOM.createRoot(document.getElementById('email-reader-view'))
 
 root.render(
-  <>
+  <React.StrictMode>
     <Header />
     <Form />
     <Footer />
-  </>,
+  </React.StrictMode>,
 )

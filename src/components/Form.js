@@ -62,12 +62,12 @@ const App = () => {
   }
 
   useEffect(() => {
-    toggleReaderView(toggleButton, profiles, settings, currentProfile)
+    toggleReaderView(profiles, settings, currentProfile, toggleButton)
     localStorage.setItem('localProfiles', JSON.stringify(profiles))
     localStorage.setItem('localSettings', JSON.stringify(settings))
     localStorage.setItem('currentProfile', currentProfile)
     localStorage.setItem('toggleButton', toggleButton)
-  }, [toggleButton, profiles, settings, currentProfile])
+  }, [profiles, settings, currentProfile, toggleButton])
 
   return (
     <>

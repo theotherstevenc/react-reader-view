@@ -56,13 +56,14 @@ h1 img {
 .toggle-button {
   margin: 0 0 1em 0;
 }
+[role='menubar'] input:checked + .button {
+  outline: 0.2em solid var(--accent, #0d5c63) !important;
+  /* important prevents the outline from being visible on click. refactor */
+}
+
 [role='menubar'] input:focus + .button {
   outline: 2px solid Highlight !important;
   outline: auto 5px -webkit-focus-ring-color !important;
-}
-[role='menubar'] input:checked + .button {
-  outline: 0.2em solid var(--accent, #0d5c63) !important;
-  /* important prevents the outline from being visible on click. refactor this */
 }
 
 [role='menubar'] .profiles {
