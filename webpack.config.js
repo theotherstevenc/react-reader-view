@@ -45,6 +45,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './src/popup.html',
       filename: 'popup.html',
+      excludeChunks: ['background'],
     }),
     new CopyPlugin({
       patterns: [{ from: 'public' }],
