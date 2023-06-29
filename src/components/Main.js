@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import disableReaderView from '../utils/disableReaderView'
 import enableReaderView from '../utils/enableReaderView'
 
-const App = () => {
+const Main = () => {
   const initialProfiles = [
     {
       id: 'A',
@@ -58,6 +58,7 @@ const App = () => {
         function: toggleButton ? enableReaderView : disableReaderView,
         args: [profiles, settings, currentProfile],
       })
+      chrome.tabs.sendMessage(activeTabId, { toggleButton, profiles, settings, currentProfile })
     })
   }
 
@@ -324,4 +325,4 @@ const App = () => {
   )
 }
 
-export default App
+export default Main
