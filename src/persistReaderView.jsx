@@ -2,14 +2,15 @@
 WORK IN PROGRESS:
 experimenting with a feature which will persist the reader view settings while navigating between emails in the inbox.
 it's buggy and not ready for prime time, but I'm leaving it in the codebase for now.
-TLDR: 
+TLDR:
+  - this is Gmail only for now.
   - popup.js sends the necessary settings to the content-script.js
   - content-script stores them in local storage.
   - if the reader view is enabled when the user clicks on an email in the inbox, the content script will wait 250ms then apply the reader view to the email.
 TODO: 
   - look for a better way to do this, or just remove it entirely.
   - also take into account reading pane settings.
-  - utilize react if necessary.  
+  - utilize react if necessary or advantageous.  
 */
 
 import enableReaderView from './utils/enableReaderView'
