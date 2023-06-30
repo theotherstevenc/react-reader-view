@@ -35,17 +35,12 @@ Generates the UI, handles actions, and manages state/storage. It's converted to 
 
 Serves as a template for webpack. `<script>` tags will be injected during the build process which will be responsible for populating the DOM and creating the UI. It's copied into `dist/` during the build process. _options are available for developing and testing the output of popup.html_
 
-### `background.jsx`
-
-Currently blank. However, it's compiled during the build, so it's ready to be used if needed. It is converted to `background.js` and copied into `dist/` during the build process.
-
 ### `public/`
 
-Contents of this directory are copied into `dist/` during the build process. Contents of the individual files are untouched.
+Contents of this directory are copied into `dist/` during the build process, individual files are untouched.
 
 ### `utils/`
 
-- `profiles.js`, `generalSettings.js` set initial values from localstorage, or from hardcoded defaults
 - `disableReaderView.js` logic to disable the extension
 - `enableReaderView.js` logic to enable the extension
 - `css/styles.css` styles are injected automatically
