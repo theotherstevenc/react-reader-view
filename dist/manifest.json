@@ -12,9 +12,16 @@
     "48": "/images/email-reader48.png",
     "128": "/images/email-reader128.png"
   },
-  "background": {
-    "service_worker": "background.js"
-  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://mail.google.com/mail/*"
+      ],
+      "js": [
+        "persistReaderView.js"
+      ]
+    }
+  ],
   "permissions": [
     "scripting",
     "activeTab"

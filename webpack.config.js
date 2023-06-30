@@ -6,7 +6,7 @@ const CopyPlugin = require('copy-webpack-plugin')
 module.exports = {
   entry: {
     popup: './src/popup.jsx',
-    background: './src/background.jsx',
+    ['persistReaderView']: './src/persistReaderView.jsx',
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -45,6 +45,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './src/popup.html',
       filename: 'popup.html',
+      excludeChunks: ['persistReaderView'],
     }),
     new CopyPlugin({
       patterns: [{ from: 'public' }],
