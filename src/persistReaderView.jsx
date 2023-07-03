@@ -15,8 +15,7 @@ TODO:
 
 import enableReaderView from './utils/enableReaderView'
 
-chrome.runtime.onMessage.addListener((requestObject) => {
-  const { profiles, settings, currentProfile, toggleButton } = requestObject
+chrome.runtime.onMessage.addListener(({ profiles, settings, currentProfile, toggleButton }) => {
   localStorage.setItem('localProfiles', JSON.stringify(profiles))
   localStorage.setItem('localSettings', JSON.stringify(settings))
   localStorage.setItem('currentProfile', currentProfile)

@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "The Other React Email Reader",
-  "description": "",
-  "version": "1.0",
+  "name": "Email Reader View",
+  "description": "Display emails in a more readable format",
+  "version": "2.0",
   "action": {
     "default_popup": "popup.html"
   },

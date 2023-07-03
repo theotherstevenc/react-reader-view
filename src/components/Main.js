@@ -197,7 +197,6 @@ const Main = () => {
                 value={settings.maxWidth}
                 onChange={(e) => {
                   setSettings({ ...settings, maxWidth: e.target.value })
-                  JSON.parse(localStorage.getItem('localSettings')).maxWidth = e.target.value
                 }}
               />
             </span>
@@ -211,7 +210,6 @@ const Main = () => {
                 value={settings.fontFamily}
                 onChange={(e) => {
                   setSettings({ ...settings, fontFamily: e.target.value })
-                  JSON.parse(localStorage.getItem('localSettings')).fontFamily = e.target.value
                 }}
               >
                 {['serif', 'sans-serif', 'monospace', 'cursive'].map((option) => (
@@ -235,7 +233,6 @@ const Main = () => {
                 value={settings.fontSize}
                 onChange={(e) => {
                   setSettings({ ...settings, fontSize: e.target.value })
-                  JSON.parse(localStorage.getItem('localSettings')).fontSize = e.target.value
                 }}
               />
             </span>
@@ -253,7 +250,6 @@ const Main = () => {
                 value={settings.lineHeight}
                 onChange={(e) => {
                   setSettings({ ...settings, lineHeight: e.target.value })
-                  JSON.parse(localStorage.getItem('localSettings')).lineHeight = e.target.value
                 }}
               />
             </span>
@@ -271,7 +267,6 @@ const Main = () => {
                 value={settings.wordSpacing}
                 onChange={(e) => {
                   setSettings({ ...settings, wordSpacing: e.target.value })
-                  JSON.parse(localStorage.getItem('localSettings')).wordSpacing = e.target.value
                 }}
               />
             </span>
@@ -289,7 +284,6 @@ const Main = () => {
                 value={settings.letterSpacing}
                 onChange={(e) => {
                   setSettings({ ...settings, letterSpacing: e.target.value })
-                  JSON.parse(localStorage.getItem('localSettings')).letterSpacing = e.target.value
                 }}
               />
             </span>
@@ -304,7 +298,6 @@ const Main = () => {
                 checked={settings.blockImages}
                 onChange={(e) => {
                   setSettings({ ...settings, blockImages: e.target.checked })
-                  JSON.parse(localStorage.getItem('localSettings')).blockImages = e.target.checked
                 }}
               />
             </span>
