@@ -8,7 +8,7 @@ Currently, the extension supports web versions of Gmail, Outlook, Yahoo, AOL. Wh
 
 ## Installation
 
-```
+```sh
 git clone https://github.com/theotherstevenc/react-reader-view.git
 cd react-reader-view
 npm install
@@ -30,6 +30,10 @@ The `/public` directory contains static assets, and are copied into `dist/` duri
 ### `popup.jsx`
 
 Generates the UI, handles actions, and manages state/storage. It's converted to `popup.js` and copied into `dist/` during the build process.
+
+### `persistReaderView.jsx`
+
+Experimental feature intended to persist the reader view settings while navigating between emails in the inbox. It's converted to `persistReaderView.js` and copied into `dist/` during the build process. It is excluded from being injected into `popup.html` by default.
 
 ### `popup.html`
 
