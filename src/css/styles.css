@@ -34,7 +34,7 @@ h1 img {
   flex-grow: 1;
 }
 
-.display-profile {
+.active-profile {
   display: block;
 }
 .button {
@@ -47,6 +47,29 @@ h1 img {
 
 .button:hover {
   cursor: pointer;
+  background-color: var(--accent, #0d5c63);
+  color: var(--background, #fefefe);
+}
+
+.button:active {
+  transform: scale(0.98);
+}
+
+.button-reset-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5em;
+}
+
+.button-reset {
+  padding: 0.8em 0em;
+}
+
+.button-reset-settings {
+  flex: 1;
+}
+.button-reset-profiles {
+  flex: 1;
 }
 
 .toggle-button {

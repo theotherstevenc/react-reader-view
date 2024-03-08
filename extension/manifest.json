@@ -1,0 +1,13 @@
+{
+  "manifest_version": 3,
+  "name": "Anytime",
+  "version": "2",
+  "action": {
+    "default_popup": "index.html"
+  },
+  "icons": {
+    "32": "icon.png"
+  },
+  "permissions": ["scripting"],
+  "host_permissions": ["http://*/*", "https://*/*"]
+}

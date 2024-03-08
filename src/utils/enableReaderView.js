@@ -106,7 +106,9 @@ const enableReaderView = (profile, settings, currentProfile) => {
     const urlParams = new URLSearchParams(queryString)
     const view = urlParams.get('view')
     if (view === 'lg') {
-      wrappers = Array.from(document.querySelectorAll('table.message > tbody > tr > td > table > tbody > tr:last-of-type > td > div'))
+      wrappers = Array.from(
+        document.querySelectorAll('table.message > tbody > tr > td > table > tbody > tr:last-of-type > td > div'),
+      )
     } else {
       wrappers = Array.from(document.querySelectorAll('.a3s'))
     }
@@ -172,7 +174,11 @@ const enableReaderView = (profile, settings, currentProfile) => {
         }
         let fauxImg = document.createElement('span')
 
-        if (item.parentNode.tagName == 'A' && item.parentNode.children.length == '1' && item.parentNode.textContent.trim() == '') {
+        if (
+          item.parentNode.tagName == 'A' &&
+          item.parentNode.children.length == '1' &&
+          item.parentNode.textContent.trim() == ''
+        ) {
           if (alt == '') {
             alt = item.parentNode.getAttribute('href')
           }

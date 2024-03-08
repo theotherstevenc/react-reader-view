@@ -1,6 +1,5 @@
-import React from 'react'
-import EMClogo from '../img/EMC-Logo.svg'
-import EMClogoW from '../img/EMC-Logo-W.svg'
+import EMClogo from '../img/emc-logo.svg'
+import EMClogoW from '../img/emc-logo-w.svg'
 
 const Footer = () => {
   return (
