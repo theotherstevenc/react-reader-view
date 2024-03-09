@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import disableReaderView from '../utils/disableReaderView'
 import enableReaderView from '../utils/enableReaderView'
 import { type Profile, type Setting, initialProfiles, initialSettings } from '../utils/initialProfileSettings'
-import { Button, Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react'
+import { Box, Button, Checkbox, Collapse, Flex, FormControl, FormLabel, Input, Select, Slider, SliderFilledTrack, SliderThumb, SliderTrack, Stack, Tab, TabList, TabPanel, TabPanels, Tabs, Text } from '@chakra-ui/react'
 
 let localProfile = localStorage.getItem('currentProfile') || 'A'
 let localProfiles = JSON.parse(localStorage.getItem('localProfiles') || JSON.stringify(initialProfiles))
@@ -15,12 +15,10 @@ const Main = () => {
   const [toggleButton, setToggleButton] = useState(toggleButtonLocal)
   const [settings, setSettings] = useState<Setting>(localSettings)
 
-  const toggleReaderView = async (
-    toggleButton: boolean,
-    profiles: Profile[],
-    settings: Setting,
-    currentProfile: string,
-  ) => {
+  const [isOpen, setIsOpen] = useState(false)
+  const toggleContent = () => setIsOpen(!isOpen)
+
+  const toggleReaderView = async (toggleButton: boolean, profiles: Profile[], settings: Setting, currentProfile: string) => {
     let [tab] = await chrome.tabs.query({ active: true, currentWindow: true })
     chrome.scripting.executeScript({
       target: { tabId: tab.id! },
@@ -53,240 +51,306 @@ const Main = () => {
       <Tabs variant='enclosed' colorScheme='green'>
         <TabList>
           {profiles.map(({ id, name }) => {
-            return <Tab key={id}>{name}</Tab>
+            return (
+              <Tab flex={1} key={id}>
+                {name}
+              </Tab>
+            )
           })}
         </TabList>
         <TabPanels>
           {profiles.map(({ name }, index) => {
             return (
-              <TabPanel>
-                <div className='selectStyles'>
-                  <label>
-                    <span>Name:</span>
-                    <span>
-                      <input
-                        type='text'
-                        value={profiles[index].name}
-                        onChange={(e) => {
-                          setProfiles((prevProfiles) => {
-                            const newProfiles = [...prevProfiles]
-                            newProfiles[index] = {
-                              ...newProfiles[index],
-                              name: e.target.value,
-                            }
-                            return newProfiles
-                          })
-                        }}
-                      />
-                    </span>
-                  </label>
-                  <label>
-                    <span>Background:</span>
-                    <span>
-                      <input
-                        type='color'
-                        value={profiles[index].backgroundColor}
-                        onChange={(e) => {
-                          setProfiles((prevProfiles) => {
-                            const newProfiles = [...prevProfiles]
-                            newProfiles[index] = {
-                              ...newProfiles[index],
-                              backgroundColor: e.target.value,
-                            }
-                            return newProfiles
-                          })
-                        }}
-                      />
-                    </span>
-                  </label>
-                  <label>
-                    <span>Text:</span>
-                    <span>
-                      <input
-                        type='color'
-                        value={profiles[index].color}
-                        onChange={(e) => {
-                          setProfiles((prevProfiles) => {
-                            const newProfiles = [...prevProfiles]
-                            newProfiles[index] = {
-                              ...newProfiles[index],
-                              color: e.target.value,
-                            }
-                            return newProfiles
-                          })
-                        }}
-                      />
-                    </span>
-                  </label>
-                  <label>
-                    <span>Links:</span>
-                    <span>
-                      <input
-                        type='color'
-                        value={profiles[index].linkColor}
-                        onChange={(e) => {
-                          setProfiles((prevProfiles) => {
-                            const newProfiles = [...prevProfiles]
-                            newProfiles[index] = {
-                              ...newProfiles[index],
-                              linkColor: e.target.value,
-                            }
-                            return newProfiles
-                          })
-                        }}
-                      />
-                    </span>
-                  </label>
-                </div>
-              </TabPanel>
+              <>
+                <TabPanel key={index}>
+                  <Flex>
+                    <Text flex={3} key={index} p={4}>
+                      Name:
+                    </Text>
+                    <Input
+                      flex={2}
+                      variant='outline'
+                      value={profiles[index].name}
+                      onChange={(e) => {
+                        setProfiles((prevProfiles) => {
+                          const newProfiles = [...prevProfiles]
+                          newProfiles[index] = {
+                            ...newProfiles[index],
+                            name: e.target.value,
+                          }
+                          return newProfiles
+                        })
+                      }}
+                    />
+                  </Flex>
+                  <Flex>
+                    <Text flex={3} key={index} p={4}>
+                      Background:
+                    </Text>
+                    <Input
+                      flex={2}
+                      variant='outline'
+                      value={profiles[index].backgroundColor}
+                      onChange={(e) => {
+                        setProfiles((prevProfiles) => {
+                          const newProfiles = [...prevProfiles]
+                          newProfiles[index] = {
+                            ...newProfiles[index],
+                            backgroundColor: e.target.value,
+                          }
+                          return newProfiles
+                        })
+                      }}
+                    />
+                  </Flex>
+                  <Flex>
+                    <Text flex={3} key={index} p={4}>
+                      Text:
+                    </Text>
+                    <Input
+                      flex={2}
+                      variant='outline'
+                      value={profiles[index].color}
+                      onChange={(e) => {
+                        setProfiles((prevProfiles) => {
+                          const newProfiles = [...prevProfiles]
+                          newProfiles[index] = {
+                            ...newProfiles[index],
+                            color: e.target.value,
+                          }
+                          return newProfiles
+                        })
+                      }}
+                    />
+                  </Flex>
+                  <Flex>
+                    <Text flex={3} key={index} p={4}>
+                      Links:
+                    </Text>
+                    <Input
+                      flex={2}
+                      variant='outline'
+                      value={profiles[index].linkColor}
+                      onChange={(e) => {
+                        setProfiles((prevProfiles) => {
+                          const newProfiles = [...prevProfiles]
+                          newProfiles[index] = {
+                            ...newProfiles[index],
+                            linkColor: e.target.value,
+                          }
+                          return newProfiles
+                        })
+                      }}
+                    />
+                  </Flex>
+                </TabPanel>
+              </>
             )
           })}
         </TabPanels>
       </Tabs>
 
-      <details>
-        <summary>General settings</summary>
-        <div className='selectStyles'>
-          <label>
-            <span>Width:</span>
-            <span>
-              <input
-                type='range'
-                name='maxWidth'
-                id='maxWidth'
-                min='20'
-                max='70'
-                step='.5'
-                value={settings.maxWidth}
-                onChange={(e) => {
-                  setSettings({ ...settings, maxWidth: Number(e.target.value) })
-                }}
-              />
-            </span>
-          </label>
-          <label>
-            <span>Font family:</span>
-            <span>
-              <select
-                name='fontFamily'
-                id='fontFamily'
-                value={settings.fontFamily}
-                onChange={(e) => {
-                  setSettings({ ...settings, fontFamily: e.target.value })
-                }}
-              >
-                {['serif', 'sans-serif', 'monospace', 'cursive'].map((option) => (
-                  <option key={option} value={option}>
-                    {option}
-                  </option>
-                ))}
-              </select>
-            </span>
-          </label>
-          <label>
-            <span>Font size:</span>
-            <span>
-              <input
-                type='range'
-                name='fontSize'
-                id='fontSize'
-                min='.5'
-                max='3'
-                step='.25'
-                value={settings.fontSize}
-                onChange={(e) => {
-                  setSettings({ ...settings, fontSize: Number(e.target.value) })
-                }}
-              />
-            </span>
-          </label>
-          <label>
-            <span>Line height:</span>
-            <span>
-              <input
-                type='range'
-                name='lineHeight'
-                id='lineHeight'
-                min='1'
-                max='2'
-                step='.1'
-                value={settings.lineHeight}
-                onChange={(e) => {
-                  setSettings({ ...settings, lineHeight: Number(e.target.value) })
-                }}
-              />
-            </span>
-          </label>
-          <label>
-            <span>Word spacing:</span>
-            <span>
-              <input
-                type='range'
-                name='wordSpacing'
-                id='wordSpacing'
-                min='0'
-                max='1'
-                step='.1'
-                value={settings.wordSpacing}
-                onChange={(e) => {
-                  setSettings({ ...settings, wordSpacing: Number(e.target.value) })
-                }}
-              />
-            </span>
-          </label>
-          <label>
-            <span>Letter spacing:</span>
-            <span>
-              <input
-                type='range'
-                name='letterSpacing'
-                id='letterSpacing'
-                min='0'
-                max='.3'
-                step='.02'
-                value={settings.letterSpacing}
-                onChange={(e) => {
-                  setSettings({ ...settings, letterSpacing: Number(e.target.value) })
-                }}
-              />
-            </span>
-          </label>
-          <label>
-            <span>Block images:</span>
-            <span>
-              <input
-                type='checkbox'
-                name='blockImages'
-                id='blockImages'
-                checked={settings.blockImages}
-                onChange={(e) => {
-                  setSettings({ ...settings, blockImages: e.target.checked })
-                }}
-              />
-            </span>
-          </label>
-        </div>
-        <div className='button-reset-container'>
-          <button
+      <Button onClick={toggleContent} width='100%' textAlign='left'>
+        {isOpen ? 'Hide Settings' : 'Show Settings'}
+      </Button>
+      <Collapse in={isOpen}>
+        <Box padding='3'>
+          <Stack spacing={4}>
+            <FormControl>
+              <Flex>
+                <FormLabel flex={1} htmlFor='width'>
+                  Width
+                </FormLabel>
+                <Slider
+                  flex={1}
+                  id='width'
+                  aria-label='Width'
+                  min={20}
+                  max={70}
+                  step={0.5}
+                  value={settings.maxWidth}
+                  colorScheme='teal'
+                  onChange={(value) => {
+                    setSettings({ ...settings, maxWidth: value })
+                  }}
+                >
+                  <SliderTrack>
+                    <SliderFilledTrack />
+                  </SliderTrack>
+                  <SliderThumb />
+                </Slider>
+              </Flex>
+            </FormControl>
+
+            <FormControl>
+              <Flex>
+                <FormLabel flex={1} htmlFor='fontFamily'>
+                  Font family
+                </FormLabel>
+                <Select
+                  flex={1}
+                  placeholder='Select option'
+                  id='fontFamily'
+                  value={settings.fontFamily}
+                  onChange={(e) => {
+                    setSettings({ ...settings, fontFamily: e.target.value })
+                  }}
+                >
+                  {['serif', 'sans-serif', 'monospace', 'cursive'].map((option) => (
+                    <option key={option} value={option}>
+                      {option}
+                    </option>
+                  ))}
+                </Select>
+              </Flex>
+            </FormControl>
+
+            <FormControl>
+              <Flex>
+                <FormLabel flex={1} htmlFor='fontSize'>
+                  Font size
+                </FormLabel>
+                <Slider
+                  flex={1}
+                  id='fontSize'
+                  aria-label='font size'
+                  min={0.5}
+                  max={3}
+                  step={0.25}
+                  value={settings.fontSize}
+                  colorScheme='teal'
+                  onChange={(value) => {
+                    setSettings({ ...settings, fontSize: value })
+                  }}
+                >
+                  <SliderTrack>
+                    <SliderFilledTrack />
+                  </SliderTrack>
+                  <SliderThumb />
+                </Slider>
+              </Flex>
+            </FormControl>
+
+            <FormControl>
+              <Flex>
+                <FormLabel flex={1} htmlFor='lineHeight'>
+                  Line height
+                </FormLabel>
+                <Slider
+                  flex={1}
+                  id='lineHeight'
+                  aria-label='line height'
+                  min={1}
+                  max={2}
+                  step={0.1}
+                  value={settings.lineHeight}
+                  colorScheme='teal'
+                  onChange={(value) => {
+                    setSettings({ ...settings, lineHeight: value })
+                  }}
+                >
+                  <SliderTrack>
+                    <SliderFilledTrack />
+                  </SliderTrack>
+                  <SliderThumb />
+                </Slider>
+              </Flex>
+            </FormControl>
+
+            <FormControl>
+              <Flex>
+                <FormLabel flex={1} htmlFor='wordSpacing'>
+                  Word spacing
+                </FormLabel>
+                <Slider
+                  flex={1}
+                  id='wordSpacing'
+                  aria-label='word spacing'
+                  min={0}
+                  max={1}
+                  step={0.1}
+                  value={settings.wordSpacing}
+                  colorScheme='teal'
+                  onChange={(value) => {
+                    setSettings({ ...settings, wordSpacing: value })
+                  }}
+                >
+                  <SliderTrack>
+                    <SliderFilledTrack />
+                  </SliderTrack>
+                  <SliderThumb />
+                </Slider>
+              </Flex>
+            </FormControl>
+
+            <FormControl>
+              <Flex>
+                <FormLabel flex={1} htmlFor='letterSpacing'>
+                  Letter spacing
+                </FormLabel>
+                <Slider
+                  flex={1}
+                  id='letterSpacing'
+                  aria-label='letter spacing'
+                  min={0}
+                  max={0.3}
+                  step={0.02}
+                  value={settings.letterSpacing}
+                  colorScheme='teal'
+                  onChange={(value) => {
+                    setSettings({ ...settings, letterSpacing: value })
+                  }}
+                >
+                  <SliderTrack>
+                    <SliderFilledTrack />
+                  </SliderTrack>
+                  <SliderThumb />
+                </Slider>
+              </Flex>
+            </FormControl>
+
+            <FormControl>
+              <Flex>
+                <FormLabel flex={1} htmlFor='blockImages'>
+                  Block images
+                </FormLabel>
+                <Checkbox
+                  flex={1}
+                  id='blockImages'
+                  aria-label='block images'
+                  size='md'
+                  colorScheme='orange'
+                  isChecked={settings.blockImages}
+                  onChange={(e) => {
+                    setSettings({ ...settings, blockImages: e.target.checked })
+                  }}
+                ></Checkbox>
+              </Flex>
+            </FormControl>
+          </Stack>
+        </Box>
+        <Box marginY={1}>
+          <Button
             type='button'
-            className='button button-reset button-reset-settings'
+            colorScheme='teal'
             onClick={() => {
               setSettings(initialSettings)
             }}
           >
             Reset Settings
-          </button>
-          <button
+          </Button>
+
+          <Button
             type='button'
-            className='button button-reset button-reset-profiles'
+            variant='outline'
             onClick={() => {
               setProfiles(initialProfiles)
             }}
           >
             Reset Profiles
-          </button>
-        </div>
-      </details>
+          </Button>
+        </Box>
+      </Collapse>
     </>
   )
 }
