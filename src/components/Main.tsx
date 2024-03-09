@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import disableReaderView from '../utils/disableReaderView'
 import enableReaderView from '../utils/enableReaderView'
 import { type Profile, type Setting, initialProfiles, initialSettings } from '../utils/initialProfileSettings'
@@ -10,7 +10,8 @@ let localSettings = JSON.parse(localStorage.getItem('localSettings') || JSON.str
 let toggleButtonLocal = JSON.parse(localStorage.getItem('toggleButton') || 'false')
 
 const Main = () => {
-  const [currentProfile, setCurrentProfile] = useState(localProfile)
+  // const [currentProfile, setCurrentProfile] = useState(localProfile)
+  const [currentProfile] = useState(localProfile)
   const [profiles, setProfiles] = useState<Profile[]>(localProfiles)
   const [toggleButton, setToggleButton] = useState(toggleButtonLocal)
   const [settings, setSettings] = useState<Setting>(localSettings)
@@ -58,6 +59,7 @@ const Main = () => {
             )
           })}
         </TabList>
+        {/* {currentProfile} */}
         <TabPanels>
           {profiles.map(({ name }, index) => {
             return (
@@ -68,6 +70,7 @@ const Main = () => {
                       Name:
                     </Text>
                     <Input
+                      id={name}
                       flex={2}
                       variant='outline'
                       value={profiles[index].name}
