@@ -18,6 +18,11 @@ export default defineConfig({
     {
       name: 'post-build',
       closeBundle() {
+        // Ensure dist exists
+        if (!existsSync('dist')) {
+          mkdirSync('dist', { recursive: true })
+        }
+
         // Copy manifest
         copyFileSync('src/manifest.json', 'dist/manifest.json')
 
