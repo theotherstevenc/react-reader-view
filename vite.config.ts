@@ -1,16 +1,21 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-import { resolve } from 'path'
+import path from 'path'
 import { copyFileSync, mkdirSync, existsSync, renameSync, rmSync } from 'fs'
+import { fileURLToPath } from 'url'
+
+// ES module equivalent of __dirname
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
 
 export default defineConfig({
   // Path aliases - must match tsconfig.json
   resolve: {
     alias: {
-      '@': resolve(__dirname, './src'),
-      '@/shared': resolve(__dirname, './src/shared'),
-      '@/popup': resolve(__dirname, './src/popup'),
-      '@/content': resolve(__dirname, './src/content'),
+      '@': path.resolve(__dirname, './src'),
+      '@/shared': path.resolve(__dirname, './src/shared'),
+      '@/popup': path.resolve(__dirname, './src/popup'),
+      '@/content': path.resolve(__dirname, './src/content'),
     },
   },
   plugins: [
@@ -59,7 +64,7 @@ export default defineConfig({
     target: 'es2022',
     rollupOptions: {
       input: {
-        popup: resolve(__dirname, 'src/popup/popup.html'),
+        popup: path.resolve(__dirname, 'src/popup/popup.html'),
       },
       output: {
         entryFileNames: '[name].js',
