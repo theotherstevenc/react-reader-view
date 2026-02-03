@@ -1,10 +1,5 @@
 /**
  * Default values and constants for Email Reader View
- *
- * References legacy implementation:
- * - Profiles: legacy/src/components/Main.js lines 6-30
- * - Settings: legacy/src/components/Main.js lines 32-42
- * - Providers: legacy/src/utils/enableReaderView.js lines 104-125
  */
 
 import type { Profile, Settings, StorageData, ProviderConfig } from './types'

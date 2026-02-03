@@ -5,9 +5,6 @@
  * injected directly into web pages via chrome.scripting.executeScript()
  *
  * All helper functions are inline to avoid import/serialization issues.
- *
- * Reference: legacy-v2/src/utils/enableReaderView.js (215 lines)
- * Reference: legacy-v2/src/utils/disableReaderView.js (42 lines)
  */
 
 import type { Profile, Settings } from '@/shared/types'

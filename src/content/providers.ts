@@ -3,8 +3,6 @@
  *
  * Finds the email body container for different email providers.
  * Each provider has different DOM structures, so we try multiple selectors.
- *
- * Reference: legacy/src/utils/enableReaderView.js lines 104-125
  */
 
 import { PROVIDERS } from '@/shared/defaults'

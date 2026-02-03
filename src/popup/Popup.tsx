@@ -5,7 +5,6 @@
  * Accessible, lightweight, and human-readable.
  * Cross-browser compatible (Chrome, Firefox, Edge).
  *
- * Reference: legacy/src/components/Main.js (322 lines)
  */
 
 import { useCallback, useEffect, useState } from 'react'
