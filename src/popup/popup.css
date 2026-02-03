@@ -2,6 +2,7 @@
  * Extension Popup Styles
  *
  * Tailwind CSS base + custom utilities
+ * Includes react-colorful styles
  */
 
 @tailwind base;
@@ -12,4 +13,24 @@
   body {
     @apply bg-gray-50 min-w-[320px];
   }
+}
+
+/* react-colorful styles */
+.react-colorful {
+  width: 200px;
+  height: 150px;
+}
+
+.react-colorful__saturation {
+  border-radius: 4px 4px 0 0;
+}
+
+.react-colorful__hue {
+  height: 24px;
+  border-radius: 0 0 4px 4px;
+}
+
+.react-colorful__pointer {
+  width: 16px;
+  height: 16px;
 }

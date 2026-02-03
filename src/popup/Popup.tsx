@@ -13,6 +13,7 @@ import * as Label from '@radix-ui/react-label'
 import * as Separator from '@radix-ui/react-separator'
 import * as Switch from '@radix-ui/react-switch'
 
+import { ColorPicker } from './ColorPicker'
 import { disableReaderView, enableReaderView } from '@/content/readerView'
 import { browser } from '@/shared/browserApi'
 import { DEFAULT_PROFILES, DEFAULT_SETTINGS } from '@/shared/defaults'
@@ -177,62 +178,44 @@ export function Popup() {
             </div>
 
             <div className='grid grid-cols-3 gap-2'>
-              <div className='space-y-1'>
-                <Label.Root htmlFor='bg-color' className='text-xs font-medium text-gray-600'>
-                  Background
-                </Label.Root>
-                <input
-                  id='bg-color'
-                  type='color'
-                  value={activeProfile.backgroundColor}
-                  onChange={(e) =>
-                    handleProfileUpdate(
-                      profiles.findIndex((p) => p.id === currentProfile),
-                      'backgroundColor',
-                      e.target.value,
-                    )
-                  }
-                  className='h-8 w-full cursor-pointer rounded border border-gray-300'
-                />
-              </div>
+              <ColorPicker
+                id='bg-color'
+                label='Background'
+                color={activeProfile.backgroundColor}
+                onChange={(color) =>
+                  handleProfileUpdate(
+                    profiles.findIndex((p) => p.id === currentProfile),
+                    'backgroundColor',
+                    color,
+                  )
+                }
+              />
 
-              <div className='space-y-1'>
-                <Label.Root htmlFor='text-color' className='text-xs font-medium text-gray-600'>
-                  Text
-                </Label.Root>
-                <input
-                  id='text-color'
-                  type='color'
-                  value={activeProfile.textColor}
-                  onChange={(e) =>
-                    handleProfileUpdate(
-                      profiles.findIndex((p) => p.id === currentProfile),
-                      'textColor',
-                      e.target.value,
-                    )
-                  }
-                  className='h-8 w-full cursor-pointer rounded border border-gray-300'
-                />
-              </div>
+              <ColorPicker
+                id='text-color'
+                label='Text'
+                color={activeProfile.textColor}
+                onChange={(color) =>
+                  handleProfileUpdate(
+                    profiles.findIndex((p) => p.id === currentProfile),
+                    'textColor',
+                    color,
+                  )
+                }
+              />
 
-              <div className='space-y-1'>
-                <Label.Root htmlFor='link-color' className='text-xs font-medium text-gray-600'>
-                  Links
-                </Label.Root>
-                <input
-                  id='link-color'
-                  type='color'
-                  value={activeProfile.linkColor}
-                  onChange={(e) =>
-                    handleProfileUpdate(
-                      profiles.findIndex((p) => p.id === currentProfile),
-                      'linkColor',
-                      e.target.value,
-                    )
-                  }
-                  className='h-8 w-full cursor-pointer rounded border border-gray-300'
-                />
-              </div>
+              <ColorPicker
+                id='link-color'
+                label='Links'
+                color={activeProfile.linkColor}
+                onChange={(color) =>
+                  handleProfileUpdate(
+                    profiles.findIndex((p) => p.id === currentProfile),
+                    'linkColor',
+                    color,
+                  )
+                }
+              />
             </div>
           </div>
         )}
