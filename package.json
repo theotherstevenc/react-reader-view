@@ -5,10 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "vite build --watch",
+    "serve": "vite preview --outDir dist",
     "build": "npm run clean && tsc && vite build",
     "clean": "rm -rf dist",
     "type-check": "tsc --noEmit",
-    "preview": "vite preview",
     "lint": "eslint src --ext .ts,.tsx",
     "lint:fix": "eslint src --ext .ts,.tsx --fix",
     "format": "prettier --write \"src/**/*.{ts,tsx,css,html,json}\"",
