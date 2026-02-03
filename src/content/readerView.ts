@@ -1,81 +1,62 @@
 /**
  * Reader View Transformation Logic
  *
- * Core functionality to transform email content into readable format.
- * Applies custom styling, strips inline styles, and processes special elements.
+ * IMPORTANT: These functions must be SELF-CONTAINED (no imports) because they are
+ * injected directly into web pages via chrome.scripting.executeScript()
  *
- * Reference: legacy/src/utils/enableReaderView.js (214 lines)
- * Reference: legacy/src/utils/disableReaderView.js (41 lines)
+ * All helper functions are inline to avoid import/serialization issues.
+ *
+ * Reference: legacy-v2/src/utils/enableReaderView.js (215 lines)
+ * Reference: legacy-v2/src/utils/disableReaderView.js (42 lines)
  */
-
-import { getEmailContainer } from './providers'
 
 import type { Profile, Settings } from '@/shared/types'
 
 /**
  * Enable reader view on the current email
  *
- * @param profiles - Array of 3 color profiles
- * @param settings - Typography and display settings
- * @param currentProfileId - Which profile to apply (A, B, or C)
+ * SELF-CONTAINED: All logic inline, no external function calls
  */
-export function enableReaderView(profiles: Profile[], settings: Settings, currentProfileId: Profile['id']): void {
-  const container = getEmailContainer()
-  if (!container) {
+export function enableReaderView(profiles: Profile[], settings: Settings, currentProfile: Profile['id']): void {
+  let wrappers: Element[] = []
+
+  // Remove old blocked images from previous runs
+  const oldBlocked = document.querySelectorAll('.blockedImage')
+  for (const item of Array.from(oldBlocked)) {
+    item.remove()
+  }
+
+  // Provider-specific email container detection (inline - no imports)
+  if (window.location.hostname === 'mail.google.com') {
+    const queryString = window.location.search
+    const urlParams = new URLSearchParams(queryString)
+    const view = urlParams.get('view')
+    if (view === 'lg') {
+      wrappers = Array.from(document.querySelectorAll('table.message > tbody > tr > td > table > tbody > tr:last-of-type > td > div'))
+    } else {
+      wrappers = Array.from(document.querySelectorAll('.a3s'))
+    }
+  }
+
+  if (window.location.hostname === 'outlook.live.com') {
+    wrappers = Array.from(document.querySelectorAll("[aria-label='Message body']"))
+  }
+
+  if (window.location.hostname === 'mail.yahoo.com') {
+    wrappers = Array.from(document.querySelectorAll('.msg-body'))
+  }
+
+  if (window.location.hostname === 'mail.aol.com') {
+    wrappers = Array.from(document.querySelectorAll('.AOLWebSuite > div[id], .msg-body'))
+  }
+
+  if (wrappers.length === 0) {
     alert('Email Reader View: Could not find email content on this page')
     return
   }
 
-  // Check for AMP email (iframe-based, not supported)
-  const iframe = container.querySelector('iframe')
-  if (iframe) {
-    alert('Reader view does not yet support AMP email')
-    return
-  }
-
-  // Find current profile
-  const currentProfile = profiles.find((p) => p.id === currentProfileId)
-  if (!currentProfile) return
-
-  // Apply reader view class and attribute
-  container.classList.add('readerView')
-  container.setAttribute('data-readerViewProfile', currentProfileId)
-
-  // Inject or update styles
-  injectStyles(profiles, settings)
-
-  // Process all elements
-  processElements(container, settings)
-}
-
-/**
- * Inject CSS styles into the page
- * Creates or updates a <style> element in <head>
- */
-function injectStyles(profiles: Profile[], settings: Settings): void {
-  const styleId = 'ervStyleElement'
-  let styleElement = document.getElementById(styleId) as HTMLStyleElement
-
-  if (!styleElement) {
-    styleElement = document.createElement('style')
-    styleElement.id = styleId
-    document.head.appendChild(styleElement)
-  }
-
-  styleElement.textContent = generateCSS(profiles, settings)
-}
-
-/**
- * Generate CSS stylesheet
- *
- * IMPORTANT: This CSS is complex and must remain EXACT.
- * It handles table detection, style resets, and profile colors.
- *
- * Reference: legacy/src/utils/enableReaderView.js lines 4-98
- */
-function generateCSS(profiles: Profile[], settings: Settings): string {
-  // Note: profile[0].color changed to profile[0].textColor in our types
-  return `
+  // Generate CSS (all inline - matching legacy exactly)
+  const styleSheet = `
     .readerView.readerView * {
       all: revert
     }
@@ -162,152 +143,123 @@ function generateCSS(profiles: Profile[], settings: Settings): string {
       letter-spacing:${settings.letterSpacing}em;
       max-width: ${settings.maxWidth}em;
       margin: 0 auto;
-      overflow: auto; /* For when things can't collapse far enough */
-      padding: 1em !important; /* override yahoo */
+      overflow: auto;
+      padding: 1em !important;
     }
     .readerView.readerView *{
       text-align:${settings.textAlign};
     }
-  .readerView.readerView button{display:none} /* Outlook zoom button */
+  .readerView.readerView button{display:none}
   `
-}
 
-/**
- * Process all elements in the email container
- *
- * Iterates through every element and:
- * - Hides already-hidden elements
- * - Handles emoji images
- * - Blocks images if enabled
- * - Fixes empty links
- * - Strips styling attributes
- *
- * Reference: legacy/src/utils/enableReaderView.js lines 145-212
- */
-function processElements(container: HTMLElement, settings: Settings): void {
-  // Remove old blocked images from previous runs
-  const oldBlockedImages = document.querySelectorAll('.blockedImage')
-  oldBlockedImages.forEach((img) => img.remove())
+  // Create/update style element
+  if (!document.querySelector('#ervStyleElement')) {
+    const ervStyleElement = document.createElement('style')
+    ervStyleElement.setAttribute('id', 'ervStyleElement')
+    wrappers[0].parentElement?.prepend(ervStyleElement)
+  }
 
-  // Get all elements in the email
-  const elements = Array.from(container.querySelectorAll('*'))
+  // Apply reader view to all wrappers
+  for (const wrapper of Array.from(wrappers)) {
+    const iframe = wrapper.querySelector('iframe')
+    if (iframe === null) {
+      wrapper.classList.add('readerView')
+      wrapper.setAttribute('data-readerViewProfile', currentProfile)
+      const styleEl = document.querySelector('#ervStyleElement')
+      if (styleEl) {
+        styleEl.textContent = styleSheet
+      }
+    } else {
+      alert('Reader view does not yet support AMP email')
+      break
+    }
+  }
 
-  for (const element of elements) {
-    const htmlElement = element as HTMLElement
-    const computedStyle = window.getComputedStyle(htmlElement)
+  // Process all elements (all inline - matching legacy exactly)
+  const emails = Array.from(document.querySelectorAll('.readerView *'))
 
-    // Hide elements that are already hidden
-    if (computedStyle.display === 'none') {
-      htmlElement.setAttribute('data-hidden', '')
+  for (const item of emails) {
+    const element = item as HTMLElement
+    const style = window.getComputedStyle(element)
+
+    if (style.display === 'none') {
+      element.setAttribute('data-hidden', '')
     }
 
-    if (htmlElement.getAttribute('aria-hidden') === 'true') {
-      htmlElement.setAttribute('data-hidden', '')
+    if (element.getAttribute('aria-hidden') === 'true') {
+      element.setAttribute('data-hidden', '')
     }
 
-    // Handle emoji images
-    handleEmojis(htmlElement, settings)
+    if (element.hasAttribute('data-erv-emoji')) {
+      element.remove()
+      continue
+    }
 
-    // Block images if enabled
+    if (element.hasAttribute('data-emoji') && settings.blockImages === false) {
+      const alt = element.getAttribute('alt')
+      element.insertAdjacentHTML('beforebegin', '<span data-erv-emoji>' + alt + '</span>')
+      element.setAttribute('data-hidden', '')
+    }
+
     if (settings.blockImages) {
-      handleImageBlocking(htmlElement)
+      if (element.tagName === 'IMG' && !element.hasAttribute('hidden')) {
+        let alt = element.getAttribute('alt')
+        if (alt === null || alt.trim() === '') {
+          alt = ''
+        }
+        const fauxImg = document.createElement('span')
+
+        if (
+          element.parentNode &&
+          (element.parentNode as HTMLElement).tagName === 'A' &&
+          (element.parentNode as HTMLElement).children.length === 1 &&
+          (element.parentNode as HTMLElement).textContent?.trim() === ''
+        ) {
+          if (alt === '') {
+            alt = (element.parentNode as HTMLElement).getAttribute('href') || ''
+          }
+        }
+        fauxImg.innerText = alt.trim()
+        fauxImg.classList.add('blockedImage')
+        element.insertAdjacentHTML('beforebegin', fauxImg.outerHTML)
+      }
     }
 
-    // Fix empty links (add href as text content)
-    if (htmlElement.tagName === 'A' && htmlElement.innerHTML.trim() === '') {
-      const href = htmlElement.getAttribute('href')
-      if (href) htmlElement.textContent = href
+    if (element.tagName === 'A' && element.innerHTML.trim() === '') {
+      const href = element.getAttribute('href')
+      if (href) element.insertAdjacentHTML('afterbegin', href)
     }
 
-    // Clean up empty nbsp
-    if (htmlElement.innerHTML.trim() === '&nbsp;') {
-      htmlElement.innerHTML = ''
+    if (element.innerHTML.trim() === '&nbsp;') {
+      element.innerHTML = ''
     }
 
-    // Strip styling attributes (but save them for restoration)
-    stripAttributes(htmlElement)
-  }
-}
-
-/**
- * Handle emoji images
- *
- * Converts emoji images to text using alt attribute
- *
- * Reference: legacy/src/utils/enableReaderView.js lines 157-165
- */
-function handleEmojis(element: HTMLElement, settings: Settings): void {
-  // Remove emoji replacements from previous runs
-  if (element.hasAttribute('data-erv-emoji')) {
-    element.remove()
-    return
-  }
-
-  // Convert emoji images to text (if not blocking images)
-  if (element.hasAttribute('data-emoji') && !settings.blockImages) {
-    const alt = element.getAttribute('alt') || ''
-    element.insertAdjacentHTML('beforebegin', `<span data-erv-emoji>${alt}</span>`)
-    element.setAttribute('data-hidden', '')
-  }
-}
-
-/**
- * Handle image blocking
- *
- * Replaces images with their alt text for privacy/data savings
- *
- * Reference: legacy/src/utils/enableReaderView.js lines 167-184
- */
-function handleImageBlocking(element: HTMLElement): void {
-  if (element.tagName !== 'IMG' || element.hasAttribute('hidden')) return
-
-  let alt = element.getAttribute('alt') || ''
-
-  // Special case: Image is only child of a link
-  const parent = element.parentElement
-  if (parent?.tagName === 'A' && parent.children.length === 1 && parent.textContent?.trim() === '') {
-    // If no alt text, use the link href instead
-    if (alt === '') {
-      alt = parent.getAttribute('href') || ''
+    // Strip attributes inline
+    const replaceAttribute = (attribute: string) => {
+      if (element.hasAttribute(attribute)) {
+        const attributeValue = element.getAttribute(attribute)
+        const attributeName = 'data-removed' + attribute
+        element.setAttribute(attributeName, attributeValue || '')
+        element.removeAttribute(attribute)
+      }
     }
-  }
 
-  // Create placeholder span with alt text
-  const placeholder = document.createElement('span')
-  placeholder.textContent = alt.trim()
-  placeholder.classList.add('blockedImage')
-  element.insertAdjacentElement('beforebegin', placeholder)
-}
-
-/**
- * Strip styling attributes from an element
- *
- * Removes style, class, id, and other presentation attributes.
- * Saves them as data-removed* attributes so they can be restored.
- *
- * Reference: legacy/src/utils/enableReaderView.js lines 195-212
- */
-function stripAttributes(element: HTMLElement): void {
-  const attributesToStrip = ['style', 'class', 'id', 'align', 'color', 'background', 'bgcolor', 'width', 'height']
-
-  for (const attr of attributesToStrip) {
-    if (element.hasAttribute(attr)) {
-      const value = element.getAttribute(attr)
-      element.setAttribute(`data-removed${attr}`, value || '')
-      element.removeAttribute(attr)
-    }
+    replaceAttribute('style')
+    replaceAttribute('class')
+    replaceAttribute('id')
+    replaceAttribute('align')
+    replaceAttribute('color')
+    replaceAttribute('background')
+    replaceAttribute('bgcolor')
+    replaceAttribute('width')
+    replaceAttribute('height')
   }
 }
 
 /**
  * Disable reader view
  *
- * Reverses all transformations:
- * - Restores original attributes
- * - Removes reader view classes
- * - Removes injected styles
- *
- * Reference: legacy/src/utils/disableReaderView.js (entire file - 41 lines)
+ * SELF-CONTAINED: All logic inline, no external function calls
  */
 export function disableReaderView(): void {
   const containers = document.querySelectorAll('.readerView')
@@ -316,50 +268,48 @@ export function disableReaderView(): void {
     const elements = container.querySelectorAll('*')
 
     for (const element of Array.from(elements)) {
-      const htmlElement = element as HTMLElement
+      const item = element as HTMLElement
 
-      // Restore stripped attributes
-      restoreAttributes(htmlElement)
+      // Restore attributes inline
+      const restoreAttribute = (attribute: string) => {
+        if (item.hasAttribute('data-removed' + attribute)) {
+          const attributeValue = item.getAttribute('data-removed' + attribute)
+          const attributeName = 'data-removed' + attribute
+          if (attributeValue) item.setAttribute(attribute, attributeValue)
+          item.removeAttribute(attributeName)
+        }
+      }
 
-      // Remove data-hidden
-      htmlElement.removeAttribute('data-hidden')
+      restoreAttribute('style')
+      restoreAttribute('class')
+      restoreAttribute('id')
+      restoreAttribute('align')
+      restoreAttribute('color')
+      restoreAttribute('background')
+      restoreAttribute('bgcolor')
+      restoreAttribute('width')
+      restoreAttribute('height')
 
-      // Remove emoji replacements
-      if (htmlElement.hasAttribute('data-erv-emoji')) {
-        htmlElement.remove()
+      if (item.hasAttribute('data-hidden')) {
+        item.removeAttribute('data-hidden')
+      }
+
+      if (item.hasAttribute('data-erv-emoji')) {
+        item.remove()
       }
     }
 
-    // Remove reader view class and attribute
     container.classList.remove('readerView')
     container.removeAttribute('data-readerviewprofile')
   }
 
-  // Remove blocked image placeholders
   const blockedImages = document.querySelectorAll('.blockedImage')
-  blockedImages.forEach((img) => img.remove())
+  for (const item of Array.from(blockedImages)) {
+    item.remove()
+  }
 
-  // Remove style element
   const styleElement = document.getElementById('ervStyleElement')
-  styleElement?.remove()
-}
-
-/**
- * Restore original attributes
- *
- * Puts back the attributes that were stripped by stripAttributes()
- *
- * Reference: legacy/src/utils/disableReaderView.js lines 14-20
- */
-function restoreAttributes(element: HTMLElement): void {
-  const attributesToRestore = ['style', 'class', 'id', 'align', 'color', 'background', 'bgcolor', 'width', 'height']
-
-  for (const attr of attributesToRestore) {
-    const dataAttr = `data-removed${attr}`
-    if (element.hasAttribute(dataAttr)) {
-      const value = element.getAttribute(dataAttr)
-      if (value) element.setAttribute(attr, value)
-      element.removeAttribute(dataAttr)
-    }
+  if (styleElement) {
+    styleElement.remove()
   }
 }
