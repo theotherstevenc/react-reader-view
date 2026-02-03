@@ -11,8 +11,7 @@
  * - Automatic serialization/deserialization
  */
 
-import browser from 'webextension-polyfill'
-
+import { browser } from './browserApi'
 import { DEFAULT_STORAGE } from './defaults'
 
 import type { StorageData } from './types'

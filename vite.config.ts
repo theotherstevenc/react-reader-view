@@ -55,6 +55,8 @@ export default defineConfig({
     emptyOutDir: true,
     // Enable source maps for debugging in Chrome DevTools
     sourcemap: true,
+    // Support top-level await for dynamic imports
+    target: 'es2022',
     rollupOptions: {
       input: {
         popup: resolve(__dirname, 'src/popup/popup.html'),

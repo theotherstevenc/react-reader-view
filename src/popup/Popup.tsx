@@ -12,9 +12,9 @@ import { useCallback, useEffect, useState } from 'react'
 import * as Label from '@radix-ui/react-label'
 import * as Separator from '@radix-ui/react-separator'
 import * as Switch from '@radix-ui/react-switch'
-import browser from 'webextension-polyfill'
 
 import { disableReaderView, enableReaderView } from '@/content/readerView'
+import { browser } from '@/shared/browserApi'
 import { DEFAULT_PROFILES, DEFAULT_SETTINGS } from '@/shared/defaults'
 import { getStorage, updateCurrentProfile, updateEnabled, updateProfiles, updateSettings } from '@/shared/storage'
 

@@ -7,12 +7,8 @@
 
 import { createRoot } from 'react-dom/client'
 
-import { initBrowserMock } from './chromeMock'
 import { Popup } from './Popup'
 import './popup.css'
-
-// Enable mocks for browser testing
-initBrowserMock()
 
 const root = document.getElementById('root')
 if (root) {
