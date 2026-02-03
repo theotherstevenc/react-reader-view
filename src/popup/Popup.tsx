@@ -3,6 +3,7 @@
  *
  * Main UI for the Email Reader View extension using Radix UI + Tailwind.
  * Accessible, lightweight, and human-readable.
+ * Cross-browser compatible (Chrome, Firefox, Edge).
  *
  * Reference: legacy/src/components/Main.js (322 lines)
  */
@@ -11,6 +12,7 @@ import { useCallback, useEffect, useState } from 'react'
 import * as Label from '@radix-ui/react-label'
 import * as Separator from '@radix-ui/react-separator'
 import * as Switch from '@radix-ui/react-switch'
+import browser from 'webextension-polyfill'
 
 import { disableReaderView, enableReaderView } from '@/content/readerView'
 import { DEFAULT_PROFILES, DEFAULT_SETTINGS } from '@/shared/defaults'
@@ -41,11 +43,11 @@ export function Popup() {
    * Apply or remove reader view on active tab
    */
   const applyReaderView = useCallback(async () => {
-    const [tab] = await chrome.tabs.query({ active: true, currentWindow: true })
+    const [tab] = await browser.tabs.query({ active: true, currentWindow: true })
     if (!tab.id) return
 
     try {
-      await chrome.scripting.executeScript({
+      await browser.scripting.executeScript({
         target: { tabId: tab.id },
         func: isEnabled ? enableReaderView : disableReaderView,
         args: [profiles, settings, currentProfile],

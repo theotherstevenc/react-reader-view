@@ -1,14 +1,17 @@
 /**
- * Chrome Storage API Helpers
+ * Browser Storage API Helpers
  *
- * Type-safe wrappers around Chrome Storage Sync API.
+ * Type-safe wrappers around Browser Storage Sync API.
  * Replaces localStorage from legacy implementation with cloud-synced storage.
+ * Uses webextension-polyfill for cross-browser compatibility (Chrome, Firefox, Edge).
  *
- * Chrome Storage Sync benefits:
- * - Settings sync across devices (if user is signed into Chrome)
+ * Storage Sync benefits:
+ * - Settings sync across devices (if user is signed in)
  * - Works in extension context (popup, content scripts, background)
  * - Automatic serialization/deserialization
  */
+
+import browser from 'webextension-polyfill'
 
 import { DEFAULT_STORAGE } from './defaults'
 
@@ -19,7 +22,7 @@ import type { StorageData } from './types'
  * Returns default values for any missing keys
  */
 export async function getStorage(): Promise<StorageData> {
-  const result = await chrome.storage.sync.get(DEFAULT_STORAGE)
+  const result = await browser.storage.sync.get(DEFAULT_STORAGE)
   return result as StorageData
 }
 
@@ -28,7 +31,7 @@ export async function getStorage(): Promise<StorageData> {
  * Only updates the keys provided
  */
 export async function setStorage(data: Partial<StorageData>): Promise<void> {
-  await chrome.storage.sync.set(data)
+  await browser.storage.sync.set(data)
 }
 
 /**
@@ -36,8 +39,8 @@ export async function setStorage(data: Partial<StorageData>): Promise<void> {
  * Clears all data and sets default values
  */
 export async function resetStorage(): Promise<void> {
-  await chrome.storage.sync.clear()
-  await chrome.storage.sync.set(DEFAULT_STORAGE)
+  await browser.storage.sync.clear()
+  await browser.storage.sync.set(DEFAULT_STORAGE)
 }
 
 /**
