@@ -239,7 +239,7 @@ export function Popup() {
         <details className='group rounded-lg border border-gray-200 bg-gray-50'>
           <summary className='cursor-pointer list-none p-3 text-sm font-semibold text-gray-900'>General Settings</summary>
 
-          <div className='space-y-3 p-3 pt-0'>
+          <div className='max-h-64 space-y-2 overflow-y-auto p-3 pt-0'>
             {/* Font Family */}
             <div className='space-y-1'>
               <Label.Root htmlFor='font-family' className='text-xs font-medium text-gray-600'>
