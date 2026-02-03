@@ -1,0 +1,6 @@
+# Prettier ignore
+node_modules
+dist
+legacy
+*.config.js
+*.config.ts
