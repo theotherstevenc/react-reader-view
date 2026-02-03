@@ -15,7 +15,16 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "types": ["chrome"]
+    "types": ["chrome"],
+    
+    // Path aliases for cleaner imports
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"],
+      "@/shared/*": ["src/shared/*"],
+      "@/popup/*": ["src/popup/*"],
+      "@/content/*": ["src/content/*"]
+    }
   },
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]

@@ -4,6 +4,15 @@ import { resolve } from 'path'
 import { copyFileSync, mkdirSync, existsSync, renameSync, rmSync } from 'fs'
 
 export default defineConfig({
+  // Path aliases - must match tsconfig.json
+  resolve: {
+    alias: {
+      '@': resolve(__dirname, './src'),
+      '@/shared': resolve(__dirname, './src/shared'),
+      '@/popup': resolve(__dirname, './src/popup'),
+      '@/content': resolve(__dirname, './src/content'),
+    },
+  },
   plugins: [
     react(),
     {
@@ -39,6 +48,8 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     emptyOutDir: true,
+    // Enable source maps for debugging in Chrome DevTools
+    sourcemap: true,
     rollupOptions: {
       input: {
         popup: resolve(__dirname, 'src/popup/popup.html'),
